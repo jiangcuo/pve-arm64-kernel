@@ -1,5 +1,5 @@
 # Proxmox Edge kernels
-Custom Linux kernels for Proxmox VE 7.
+Custom Linux kernels for Proxmox VE 7 arm64
 
 #### Available Versions
 1. Linux 6.0
@@ -71,6 +71,10 @@ debian/rules debian/control
 Before we build, make sure you have installed the build dependencies:
 ```bash
 sudo mk-build-deps -i
+```
+merge your confile,if your kernel config is `/boot/config-5.10.167-edge`,do
+```bash
+cat /boot/config-5.10.167-edge >> debian/config/config.pve
 ```
 Invoking the following command will build the kernel and its associated packages:
 ```bash
