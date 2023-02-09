@@ -13,10 +13,10 @@ Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/cmd/zed/zed.d/zed.rc b/cmd/zed/zed.d/zed.rc
-index 9ac77f929..672617f54 100644
+index 227b26c26..240d0dbfa 100644
 --- a/cmd/zed/zed.d/zed.rc
 +++ b/cmd/zed/zed.d/zed.rc
-@@ -41,7 +41,7 @@ ZED_EMAIL_ADDR="root"
+@@ -42,7 +42,7 @@ ZED_EMAIL_ADDR="root"
  ##
  # Minimum number of seconds between notifications for a similar event.
  #

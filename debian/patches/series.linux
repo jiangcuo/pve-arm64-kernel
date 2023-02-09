@@ -1,20 +1,2 @@
-ubuntu/0001-apparmor-compatibility-v2.x-net-rules.patch
-ubuntu/0002-apparmor-af_unix-mediation.patch
-ubuntu/0003-apparmor-fix-apparmor-mediating-locking-non-fs-unix-sockets.patch
-ubuntu/0004-apparmor-fix-use-after-free-in-sk_peer_label.patch
-
-pve/0001-Make-mkcompile_h-accept-an-alternate-timestamp-strin.patch
 pve/0002-bridge-keep-MAC-of-first-assigned-port.patch
-pve/0003-pci-Enable-overrides-for-missing-ACS-capabilities-4..patch
 pve/0004-kvm-disable-default-dynamic-halt-polling-growth.patch
-pve/0005-net-core-downgrade-unregister_netdevice-refcount-lea.patch
-# pve/0007-Ubuntu-remove-leftover-reference-to-ubuntu-hio-drive.patch # Not in Ubuntu Mainline
-pve/0008-bug-introduce-ASSERT_STRUCT_OFFSET.patch
-pve/0009-KVM-x86-emulator-update-the-emulation-mode-after-rsm.patch
-pve/0010-KVM-x86-emulator-smm-add-structs-for-KVM-s-smram-lay.patch
-pve/0011-KVM-x86-emulator-smm-use-smram-structs-in-the-common.patch
-pve/0012-KVM-x86-emulator-smm-use-smram-struct-for-32-bit-smr.patch
-pve/0013-KVM-x86-emulator-smm-use-smram-struct-for-64-bit-smr.patch
-pve/0014-KVM-x86-SVM-use-smram-structs.patch
-pve/0015-KVM-x86-SVM-don-t-save-SVM-state-to-SMRAM-when-VM-is.patch
-pve/0016-KVM-x86-emulator-smm-preserve-interrupt-shadow-in-SM.patch

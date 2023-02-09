@@ -26,7 +26,7 @@ Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
  2 files changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/cmd/arc_summary/arc_summary3 b/cmd/arc_summary/arc_summary3
-index 7b28012ed..fe6a6d9e2 100755
+index 301c485b3..ac46f5843 100755
 --- a/cmd/arc_summary/arc_summary3
 +++ b/cmd/arc_summary/arc_summary3
 @@ -617,13 +617,13 @@ def section_arc(kstats_dict):
@@ -79,7 +79,7 @@ index 7b28012ed..fe6a6d9e2 100755
      print()
      prt_1('L2ARC breakdown:', f_hits(l2_access_total))
 diff --git a/cmd/arcstat/arcstat.in b/cmd/arcstat/arcstat.in
-index cd9a803a2..ea45dc602 100755
+index 010f69ec0..50e5a7150 100755
 --- a/cmd/arcstat/arcstat.in
 +++ b/cmd/arcstat/arcstat.in
 @@ -482,8 +482,8 @@ def calculate():

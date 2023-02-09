@@ -22,7 +22,7 @@ Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
  1 file changed, 33 insertions(+), 33 deletions(-)
 
 diff --git a/cmd/arcstat/arcstat.in b/cmd/arcstat/arcstat.in
-index 9e7c52a6c..cd9a803a2 100755
+index 425e52d1f..010f69ec0 100755
 --- a/cmd/arcstat/arcstat.in
 +++ b/cmd/arcstat/arcstat.in
 @@ -441,73 +441,73 @@ def calculate():

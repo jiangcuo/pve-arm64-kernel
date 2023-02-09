@@ -16,10 +16,10 @@ Forwarded: no need
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/cmd/zed/zed.d/Makefile.am b/cmd/zed/zed.d/Makefile.am
-index 8b2d0c200..118c96547 100644
+index 2c8173b3e..ad39292e4 100644
 --- a/cmd/zed/zed.d/Makefile.am
 +++ b/cmd/zed/zed.d/Makefile.am
-@@ -48,6 +48,6 @@ install-data-hook:
+@@ -49,7 +49,7 @@ install-data-hook:
  	for f in $(zedconfdefaults); do \
  	  test -f "$(DESTDIR)$(zedconfdir)/$${f}" -o \
  	       -L "$(DESTDIR)$(zedconfdir)/$${f}" || \
@@ -27,3 +27,4 @@ index 8b2d0c200..118c96547 100644
 +	    echo "$${f}" >> "$(DESTDIR)$(zedexecdir)/DEFAULT-ENABLED" ; \
  	done
  	chmod 0600 "$(DESTDIR)$(zedconfdir)/zed.rc"
+ 

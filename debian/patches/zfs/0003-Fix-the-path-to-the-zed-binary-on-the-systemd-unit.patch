@@ -13,7 +13,7 @@ Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/etc/systemd/system/zfs-zed.service.in b/etc/systemd/system/zfs-zed.service.in
-index 008075138..570e27707 100644
+index be80025a4..20ce8e632 100644
 --- a/etc/systemd/system/zfs-zed.service.in
 +++ b/etc/systemd/system/zfs-zed.service.in
 @@ -4,7 +4,7 @@ Documentation=man:zed(8)
@@ -22,6 +22,6 @@ index 008075138..570e27707 100644
  [Service]
 -ExecStart=@sbindir@/zed -F
 +ExecStart=/usr/sbin/zed -F
- Restart=on-abort
+ Restart=always
  
  [Install]

@@ -14,7 +14,7 @@ Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/etc/systemd/system/zfs-import-scan.service.in b/etc/systemd/system/zfs-import-scan.service.in
-index c1111c73a..c5e12c2c6 100644
+index 598ef501b..e4f3a70c1 100644
 --- a/etc/systemd/system/zfs-import-scan.service.in
 +++ b/etc/systemd/system/zfs-import-scan.service.in
 @@ -13,7 +13,7 @@ ConditionPathIsDirectory=/sys/module/zfs
