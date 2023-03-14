@@ -1,20 +1,6 @@
-pve-kernel (6.1.10) edge; urgency=medium
+pve-kernel (5.11.0) bcm95880; urgency=medium
 
-  * Update to Linux 6.1.10
+  * Update to Linux 5.11-rc3
   * Update to ZFS 2.1.9
 
- -- Jiangcuo <jiangcuo@bingsin.com>  Thu, 9 Feb 2023 19:00:00 +0000
-
-pve-kernel (5.15.92) edge; urgency=medium
-
-  * Update to Linux 5.15.92
-  * Update to ZFS 2.1.9
-
- -- Jiangcuo <jiangcuo@bingsin.com>  Thu, 9 Feb 2023 19:00:00 +0000
-
-pve-kernel (5.10.167) edge; urgency=medium
-
-  * Update to Linux 5.10.167
-  * Update to ZFS 2.1.9
-
- -- Jiangcuo <jiangcuo@bingsin.com>  Tue, 7 Feb 2023 19:00:00 +0000
+ -- Jiangcuo <jiangcuo@bingsin.com>  Tue, 14 Mar 2023 11:00:00 +0000
