@@ -17,7 +17,7 @@ ZFS_SRC := zfs
 
 ## Debian package metadata
 debian/control: debian/templates/control.in
-	sed -e 's/@KVNAME@/${KVNAME}/g' -e 's/@KVMAJMIN@/${KERNEL_MAJMIN}/g' < debian/templates/control.in > debian/control
+	sed -e 's/@KVNAME@/${KVNAME}/g' -e 's/@KVMAJMIN@/${KERNEL_MAJMIN}/g' -e 's/edge/${DEB_DISTRIBUTION}/g' < debian/templates/control.in > debian/control
 
 debian/SOURCE:
 	echo "git clone git@github.com:fabianishere/pve-edge-kernel.git \
@@ -101,6 +101,8 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 	install -m 644 ${KERNEL_SRC}/System.map debian/${PVE_KERNEL_PKG}/boot/System.map-${KVNAME}
 	install -m 644 ${KERNEL_SRC}/${KERNEL_IMAGE_PATH} debian/${PVE_KERNEL_PKG}/boot/${KERNEL_INSTALL_FILE}-${KVNAME}
 	${MAKE} -C ${KERNEL_SRC} INSTALL_MOD_PATH=${BUILD_DIR}/debian/${PVE_KERNEL_PKG}/ modules_install
+	${MAKE} -C ${KERNEL_SRC} INSTALL_PATH=${BUILD_DIR}debian/${PVE_KERNEL_PKG}/boot dtbs_install
+
 	# install zfs drivers
 	install -d -m 0755 debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 	install -m 644 ${ZFS_SRC}/module/avl/zavl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
