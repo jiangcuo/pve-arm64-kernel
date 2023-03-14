@@ -1,3 +1,10 @@
+pve-kernel (6.1.19) kunpengd920; urgency=medium
+
+  * Update to Linux 6.1.19   
+  * Update to ZFS 2.1.9
+
+ -- Jiangcuo <jiangcuo@bingsin.com>  Tue, 14 Mar 2023 14:49:28 +0800
+
 pve-kernel (5.11.0) bcm95880; urgency=medium
 
   * Update to Linux 5.11-rc3
