@@ -1,7 +1,4 @@
 #
-# Automatically generated file; DO NOT EDIT.
-# Linux/arm64 6.1.20 Kernel Configuration
-#
 CONFIG_CC_VERSION_TEXT="gcc (Debian 10.2.1-6) 10.2.1 20210110"
 CONFIG_CC_IS_GCC=y
 CONFIG_GCC_VERSION=100201
