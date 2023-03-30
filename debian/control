@@ -27,7 +27,7 @@ Build-Depends: asciidoc,
                xmlto,
                zlib1g-dev,
                zstd
-Build-Conflicts: pve-headers-5.15.103-generic,
+Build-Conflicts: pve-headers-5.15.104-generic,
 Vcs-Git: git://github.com/jiangcuo/pve-arm64-kernel
 Vcs-Browser: https://github.com/jiangcuo/pve-arm64-kernel
 
@@ -46,7 +46,7 @@ Package: pve-headers-5.15-generic
 Architecture: any
 Section: admin
 Priority: optional
-Depends: pve-headers-5.15.103-generic,
+Depends: pve-headers-5.15.104-generic,
 Description: Latest Proxmox Edge Kernel Headers
  This is a metapackage which will install the kernel headers
  for the latest available Proxmox Edge kernel from the 5.15
@@ -57,12 +57,12 @@ Architecture: arm64
 Section: admin
 Priority: optional
 Depends: pve-firmware,
-         pve-kernel-5.15.103-generic,
+         pve-kernel-5.15.104-generic,
 Description: Latest Proxmox Edge Kernel Image
  This is a metapackage which will install the latest available
  Proxmox Edge kernel from the 5.15 series.
 
-Package: pve-headers-5.15.103-generic
+Package: pve-headers-5.15.104-generic
 Section: devel
 Priority: optional
 Architecture: arm64
@@ -72,7 +72,7 @@ Depends:
 Description: The Proxmox Edge Kernel Headers
  This package contains the Proxmox Edge Linux kernel headers
 
-Package: pve-kernel-5.15.103-generic
+Package: pve-kernel-5.15.104-generic
 Section: admin
 Priority: optional
 Architecture: arm64
