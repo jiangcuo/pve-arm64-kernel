@@ -1,43 +1,6 @@
 # Proxmox Edge kernels
 Custom Linux kernels for Proxmox VE 7 arm64
 
-#### Available Versions
-1. Linux 6.0
-
-Older builds are still available at the [Releases](https://github.com/fabianishere/pve-edge-kernel/releases) page.
-
-## Installation
-[![Hosted By: Cloudsmith](https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith&style=flat-square)](https://cloudsmith.com)
-
-First, set up our Debian repository on your Proxmox installation: 
-1. **Add the repository's GPG key:**  
-   ```bash
-   curl -1sLf 'https://dl.cloudsmith.io/public/pve-edge/kernel/gpg.8EC01CCF309B98E7.key' | gpg --dearmor -o /usr/share/keyrings/pve-edge-kernel.gpg
-   ```
-2. **Set up the `pve-edge-kernel` repository:**  
-   ```bash
-   echo "deb [signed-by=/usr/share/keyrings/pve-edge-kernel.gpg] https://dl.cloudsmith.io/public/pve-edge/kernel/deb/debian bullseye main" > /etc/apt/sources.list.d/pve-edge-kernel.list
-   ```
-3. **Install a kernel package:**  
-   ```bash
-   apt update
-   apt install pve-kernel-6.0-edge
-   ```
-
-Package repository hosting is graciously provided by  [Cloudsmith](https://cloudsmith.com).
-Cloudsmith is the only fully hosted, cloud-native, universal package management solution, that
-enables your organization to create, store and share packages in any format, to any place, with total
-confidence.
-
-### Manual
-Alternatively, you may manually install the kernels. Select from the [Releases](https://github.com/fabianishere/pve-edge-kernel/releases)
-page the kernel version you want to install and download the appropriate Debian package.
-Then, you can install the package as follows:
-
-```sh
-apt install ./pve-kernel-VERSION_amd64.deb
-```
-
 ## Building manually
 You may also choose to manually build one of these kernels yourself.
 
@@ -52,8 +15,8 @@ apt install devscripts debhelper equivs git
 #### Obtaining the source
 Obtain the source code as follows:
 ```bash
-git clone https://github.com/fabianishere/pve-edge-kernel
-cd pve-edge-kernel
+git clone https://github.com/jiangcuo/pve-arm64-kernel/
+cd pve-arm64-kernel
 ```
 Then, select the branch of your likings (e.g. `v6.0.x`) and update the submodules:
 ```bash
@@ -72,9 +35,9 @@ Before we build, make sure you have installed the build dependencies:
 ```bash
 sudo mk-build-deps -i
 ```
-merge your confile,if your kernel config is `/boot/config-5.10.167-edge`,do
+Create your kernel_conf file,if your kernel config is `/boot/config-5.10.167-edge`,do
 ```bash
-cat /boot/config-5.10.167-edge >> debian/config/config.pve
+cat /boot/config-5.10.167-edge > debian/config/config.pve
 ```
 Invoking the following command will build the kernel and its associated packages:
 ```bash
@@ -92,20 +55,11 @@ Kernel options may be controlled from [debian/config/config.pve](debian/config/c
 additional patches, you may add them to the [debian/patches/pve](debian/patches/pve) directory
 and update the [series](debian/patches/series.linux) file accordingly.
 
-## Removal
-Use `apt` to remove individual kernel packages from your system. If you want
-to remove all packages from a particular kernel release, use the following
-command:
-
-```bash
-apt remove pve-kernel-6.0*edge pve-headers-6.0*edge
-```
-
 ## Contributing
 Questions, suggestions and contributions are welcome and appreciated!
 You can contribute in various meaningful ways:
 
-* Report a bug through [Github issues](https://github.com/fabianishere/pve-edge-kernel/issues).
+* Report a bug through [Github issues](https://github.com/jiangcuo/pve-arm64-kernel/issues).
 * Propose new patches and flavors for the project.
 * Contribute improvements to the documentation.
 * Provide feedback about how we can improve the project.
