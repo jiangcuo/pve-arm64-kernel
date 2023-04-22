@@ -1,3 +1,11 @@
+pve-kernel (5.15.107) generic; urgency=medium
+
+  * Update to Linux 5.15.107
+  * Update to ZFS 2.1.11
+  * Switch kernel to ubuntu
+
+ -- Jiangcuo <jiangcuo@bingsin.com>  Sat, 4 Apr 2023 22:49:28 +0800
+
 pve-kernel (5.15.104) generic; urgency=medium
 
   * Update to Linux 5.15.104
