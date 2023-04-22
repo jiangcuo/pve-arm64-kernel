@@ -2,32 +2,18 @@
 Custom Linux kernels for Proxmox VE 7 arm64
 
 #### Available Versions
-1. Linux 6.0
-
-Older builds are still available at the [Releases](https://github.com/fabianishere/pve-edge-kernel/releases) page.
+1. Linux 6.2 ->branch:v6.1
+2. Linux 6.1 ->branch:v6.1
+3. Linux 5.15 ->master
 
 ## Installation
-[![Hosted By: Cloudsmith](https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith&style=flat-square)](https://cloudsmith.com)
+add arm64 kernel repo.
 
-First, set up our Debian repository on your Proxmox installation: 
-1. **Add the repository's GPG key:**  
-   ```bash
-   curl -1sLf 'https://dl.cloudsmith.io/public/pve-edge/kernel/gpg.8EC01CCF309B98E7.key' | gpg --dearmor -o /usr/share/keyrings/pve-edge-kernel.gpg
-   ```
-2. **Set up the `pve-edge-kernel` repository:**  
-   ```bash
-   echo "deb [signed-by=/usr/share/keyrings/pve-edge-kernel.gpg] https://dl.cloudsmith.io/public/pve-edge/kernel/deb/debian bullseye main" > /etc/apt/sources.list.d/pve-edge-kernel.list
-   ```
-3. **Install a kernel package:**  
-   ```bash
-   apt update
-   apt install pve-kernel-6.0-edge
-   ```
-
-Package repository hosting is graciously provided by  [Cloudsmith](https://cloudsmith.com).
-Cloudsmith is the only fully hosted, cloud-native, universal package management solution, that
-enables your organization to create, store and share packages in any format, to any place, with total
-confidence.
+```sh
+echo "deb https://mirrors.apqa.cn/proxmox/ pvearmkernel main" > /etc/apt/sources.list.d/pve-arm64-kernel.list
+apt update
+apt search pve-kernel
+```
 
 ### Manual
 Alternatively, you may manually install the kernels. Select from the [Releases](https://github.com/fabianishere/pve-edge-kernel/releases)
@@ -52,12 +38,12 @@ apt install devscripts debhelper equivs git
 #### Obtaining the source
 Obtain the source code as follows:
 ```bash
-git clone https://github.com/fabianishere/pve-edge-kernel
-cd pve-edge-kernel
+git https://github.com/jiangcuo/pve-arm64-kernel
+cd pve-arm64-kernel
 ```
-Then, select the branch of your likings (e.g. `v6.0.x`) and update the submodules:
+Then, select the branch of your likings (e.g. `v6.1`) and update the submodules:
 ```bash
-git checkout v6.0.x
+git checkout v6.1
 git submodule update --init --depth=1 --recursive linux
 git submodule update --init --recursive
 ```
@@ -98,14 +84,14 @@ to remove all packages from a particular kernel release, use the following
 command:
 
 ```bash
-apt remove pve-kernel-6.0*edge pve-headers-6.0*edge
+apt remove pve-kernel-6.1* pve-headers-6.1*
 ```
 
 ## Contributing
 Questions, suggestions and contributions are welcome and appreciated!
 You can contribute in various meaningful ways:
 
-* Report a bug through [Github issues](https://github.com/fabianishere/pve-edge-kernel/issues).
+* Report a bug through [Github issues](https://github.com/jiangcuo/pve-arm64-kernel/issues).
 * Propose new patches and flavors for the project.
 * Contribute improvements to the documentation.
 * Provide feedback about how we can improve the project.
