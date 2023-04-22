@@ -54,26 +54,6 @@ Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
  drivers/pci/quirks.c                          | 102 ++++++++++++++++++
  2 files changed, 111 insertions(+)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 2e77ecc12692..eae6fdc4c683 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4188,6 +4188,15 @@
- 				Also, it enforces the PCI Local Bus spec
- 				rule that those bits should be 0 in system reset
- 				events (useful for kexec/kdump cases).
-+		pci_acs_override =
-+				[PCIE] Override missing PCIe ACS support for:
-+				downstream
-+					All downstream ports - full ACS capabilities
-+				multifunction
-+					Add multifunction devices - multifunction ACS subset
-+				id:nnnn:nnnn
-+					Specific device - full ACS capabilities
-+					Specified as vid:did (vendor/device ID) in hex
- 		noioapicquirk	[APIC] Disable all boot interrupt quirks.
- 				Safety option to keep boot IRQs enabled. This
- 				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
 index 267e6002e29f..fac76ca1d16a 100644
 --- a/drivers/pci/quirks.c
