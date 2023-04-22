@@ -11,6 +11,7 @@ Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
 
 Description: track default symlinks, instead of symlinking
 Forwarded: no need
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
  cmd/zed/zed.d/Makefile.am | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

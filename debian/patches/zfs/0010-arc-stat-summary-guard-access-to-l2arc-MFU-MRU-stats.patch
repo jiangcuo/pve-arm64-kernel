@@ -20,16 +20,17 @@ also move l2_mfu_asize  l2_mru_asize l2_prefetch_asize
 l2_bufc_data_asize l2_bufc_metadata_asize to .get accessor
 (these are only present with a cache device in the pool)
 Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
  cmd/arc_summary/arc_summary3 | 28 ++++++++++++++--------------
  cmd/arcstat/arcstat.in       | 14 +++++++-------
  2 files changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/cmd/arc_summary/arc_summary3 b/cmd/arc_summary/arc_summary3
-index 301c485b3..ac46f5843 100755
+index 9d0c2d30d..fd2581ae2 100755
 --- a/cmd/arc_summary/arc_summary3
 +++ b/cmd/arc_summary/arc_summary3
-@@ -617,13 +617,13 @@ def section_arc(kstats_dict):
+@@ -609,13 +609,13 @@ def section_arc(kstats_dict):
      prt_i1('L2 cached evictions:', f_bytes(arc_stats['evict_l2_cached']))
      prt_i1('L2 eligible evictions:', f_bytes(arc_stats['evict_l2_eligible']))
      prt_i2('L2 eligible MFU evictions:',
@@ -47,7 +48,7 @@ index 301c485b3..ac46f5843 100755
      prt_i1('L2 ineligible evictions:',
             f_bytes(arc_stats['evict_l2_ineligible']))
      print()
-@@ -765,20 +765,20 @@ def section_l2arc(kstats_dict):
+@@ -757,20 +757,20 @@ def section_l2arc(kstats_dict):
             f_perc(arc_stats['l2_hdr_size'], arc_stats['l2_size']),
             f_bytes(arc_stats['l2_hdr_size']))
      prt_i2('MFU allocated size:',
@@ -79,7 +80,7 @@ index 301c485b3..ac46f5843 100755
      print()
      prt_1('L2ARC breakdown:', f_hits(l2_access_total))
 diff --git a/cmd/arcstat/arcstat.in b/cmd/arcstat/arcstat.in
-index 010f69ec0..50e5a7150 100755
+index d2b2e28d1..8004940b3 100755
 --- a/cmd/arcstat/arcstat.in
 +++ b/cmd/arcstat/arcstat.in
 @@ -482,8 +482,8 @@ def calculate():

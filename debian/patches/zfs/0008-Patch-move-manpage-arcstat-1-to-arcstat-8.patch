@@ -7,6 +7,7 @@ Originally-By: Mo Zhou <cdluminate@gmail.com>
 Originally-By: Antonio Russo <aerusso@aerusso.net>
 
 Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
  man/Makefile.am                        | 2 +-
  man/{man1/arcstat.1 => man8/arcstat.8} | 2 +-

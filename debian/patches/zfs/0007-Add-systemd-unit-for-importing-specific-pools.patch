@@ -11,6 +11,7 @@ the instance name is used unescaped (see systemd.unit(5)), since zpool names
 can contain characters which will be escaped by systemd.
 
 Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
  etc/systemd/system/50-zfs.preset.in       |  1 +
  etc/systemd/system/Makefile.am            |  1 +

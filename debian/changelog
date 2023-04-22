@@ -1,22 +1,5 @@
-pve-kernel (6.1.21) generic; urgency=medium
+pve-kernel (6.2.11) generic; urgency=medium
 
-  * Update to Linux 6.1.21
+  * Update to Linux 6.2.11
 
- -- Jiangcuo <jiangcuo@bingsin.com>  Wed, 29 Mar 2023 18:55:28 +0800
-
-pve-kernel (6.1.20) generic; urgency=medium
-
-  * Update to Linux 6.1.20
-  * delete CONFIG_ARM_SMMU_DISABLE_BYPASS_BY_DEFAULT=y
-  * builtin br_netfilter
-  * Update to ZFS 2.1.9
-  * ready for proxmox ve 7.4-1
-
- -- Jiangcuo <jiangcuo@bingsin.com>  Tue, 28 Mar 2023 23:49:28 +0800
-
-pve-kernel (6.1.19) generic; urgency=medium
-
-  * Update to Linux 6.1.19   
-  * Update to ZFS 2.1.9
-
- -- Jiangcuo <jiangcuo@bingsin.com>  Tue, 14 Mar 2023 23:49:28 +0800
+ -- Jiangcuo <jiangcuo@bingsin.com>  Sat, 22 Apr 2023 18:55:28 +0800
