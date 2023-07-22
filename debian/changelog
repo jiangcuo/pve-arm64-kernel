@@ -1,3 +1,9 @@
+pve-kernel (6.2.16-3) generic; urgency=medium
+
+  * Update to Linux 6.2.16-3
+
+ -- jiangcuo <jiangcuo@bingsin.com>  Sat, 22 Jul 2023 11:02:43 +0000
+
 pve-kernel (6.2.11) generic; urgency=medium
 
   * Update to Linux 6.2.11
