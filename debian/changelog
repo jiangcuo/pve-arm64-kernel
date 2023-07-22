@@ -1,5 +1,7 @@
-pve-kernel (6.2.11) generic; urgency=medium
+pve-kernel (6.5-rc2) pve; urgency=medium
 
-  * Update to Linux 6.2.11
+  * Build for loong64 without zfs  
 
- -- Jiangcuo <jiangcuo@bingsin.com>  Sat, 22 Apr 2023 18:55:28 +0800
+  * Update to linux kernel 6.5-rc2
+
+ -- jiangcuo <jiangcuo@bingsin.com>  Sat, 22 Jul 2023 10:45:31 +0800
