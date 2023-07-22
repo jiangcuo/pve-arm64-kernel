@@ -14,13 +14,14 @@ jobs:
       uses: actions/checkout@v3
       with:
           submodules: recursive
-          path: pve-edge-kernel
+          path: pve-port-kernel
     - name: Clean Repository
-      run: git -C pve-edge-kernel submodule foreach git clean -ffdx
+      run: git -C pve-port-kernel submodule foreach git clean -ffdx
     - name: Build Kernel
       run: |
         rm -rf *.deb *.ddeb *.build *.buildinfo *.changes
-        cd pve-edge-kernel
+        cd pve-port-kernel
+        rm debian/control
         debian/rules debian/control
         debuild -e CCACHE_DIR=/var/cache/ccache --prepend-path=/usr/lib/ccache --jobs=auto -b -uc -us
     - name: Upload Artifacts
