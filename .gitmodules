@@ -3,4 +3,4 @@
 	url = https://github.com/openzfs/zfs.git
 [submodule "linux"]
 	path = linux
-	url = https://git.proxmox.com/git/mirror_ubuntu-kernels.git
+	url = https://github.com/loongson/linux-loongarch-kvm.git
