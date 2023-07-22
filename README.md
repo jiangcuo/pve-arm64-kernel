@@ -1,19 +1,8 @@
-# Proxmox Edge kernels
-Custom Linux kernels for Proxmox VE 7 arm64
+# Proxmox Port kernels
+Custom Linux kernels for Proxmox VE loongarch64
 
-#### Available Versions
-1. Linux 6.2 ->branch:v6.1
-2. Linux 6.1 ->branch:v6.1
-3. Linux 5.15 ->master
-
-## Installation
-add arm64 kernel repo.
-
-```sh
-echo "deb https://mirrors.apqa.cn/proxmox/ pvearmkernel main" > /etc/apt/sources.list.d/pve-arm64-kernel.list
-apt update
-apt search pve-kernel
-```
+6.5 kernel with kvm for 3A5000/3A6000. 
+No zfs support now!
 
 ### Manual
 Alternatively, you may manually install the kernels. Select from the [Releases](https://github.com/fabianishere/pve-edge-kernel/releases)
@@ -38,12 +27,12 @@ apt install devscripts debhelper equivs git
 #### Obtaining the source
 Obtain the source code as follows:
 ```bash
-git https://github.com/jiangcuo/pve-arm64-kernel
-cd pve-arm64-kernel
+git https://github.com/jiangcuo/pve-port-kernel
+cd pve-port-kernel
 ```
 Then, select the branch of your likings (e.g. `v6.1`) and update the submodules:
 ```bash
-git checkout v6.1
+git checkout loong64
 git submodule update --init --depth=1 --recursive linux
 git submodule update --init --recursive
 ```
