@@ -1,27 +1,5 @@
-pve-kernel (5.15.107) generic; urgency=medium
+pve-kernel (5.10.35) lsdk; urgency=medium
 
-  * Update to Linux 5.15.107
-  * Update to ZFS 2.1.11
-  * Switch kernel to ubuntu
+  * add lsdk for test
 
- -- Jiangcuo <jiangcuo@bingsin.com>  Sat, 4 Apr 2023 22:49:28 +0800
-
-pve-kernel (5.15.104) generic; urgency=medium
-
-  * Update to Linux 5.15.104
-
- -- Jiangcuo <jiangcuo@bingsin.com>  Thu, 30 Mar 2023 13:49:28 +0800
-
-pve-kernel (5.15.103) generic; urgency=medium
-
-  * Update to Linux 5.15.103
-  * Ready for proxmox ve 7.4-1
-
- -- Jiangcuo <jiangcuo@bingsin.com>  Tue, 28 Mar 2023 13:49:28 +0800
-
-pve-kernel (5.15.99) generic; urgency=medium
-
-  * Update to Linux 6.1.19
-  * Update to ZFS 2.1.9
-
- -- Jiangcuo <jiangcuo@bingsin.com>  Sat, 18 Mar 2023 13:49:28 +0800
+ -- jiangcuo <jiangcuo@bingsin.com>  Sun, 23 Jul 2023 03:40:16 +0000
