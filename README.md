@@ -38,12 +38,12 @@ apt install devscripts debhelper equivs git
 #### Obtaining the source
 Obtain the source code as follows:
 ```bash
-git https://github.com/jiangcuo/pve-arm64-kernel
-cd pve-arm64-kernel
+git https://github.com/jiangcuo/pve-port-kernel
+cd pve-port-kernel
 ```
 Then, select the branch of your likings (e.g. `v6.1`) and update the submodules:
 ```bash
-git checkout v6.1
+git checkout lsdk-21.08
 git submodule update --init --depth=1 --recursive linux
 git submodule update --init --recursive
 ```
