@@ -1,27 +1,19 @@
 # Proxmox Edge kernels
-Custom Linux kernels for Proxmox VE 7 arm64
+Custom Linux kernels for Proxmox VE arm64
 
 #### Available Versions
-1. Linux 6.2 ->branch:v6.1
-2. Linux 6.1 ->branch:v6.1
-3. Linux 5.15 ->master
+1. Linux 6.2 ->branch:v6.2
+2. Linux 6.1 -> master
+3. Linux 5.15 -> branch:v5.15
 
 ## Installation
 add arm64 kernel repo.
 
 ```sh
-echo "deb https://mirrors.apqa.cn/proxmox/ pvearmkernel main" > /etc/apt/sources.list.d/pve-arm64-kernel.list
+echo "deb https://mirrors.apqa.cn/proxmox/debian/kernel sid port" > /etc/apt/sources.list.d/pve-arm64-kernel.list
 apt update
 apt search pve-kernel
-```
-
-### Manual
-Alternatively, you may manually install the kernels. Select from the [Releases](https://github.com/fabianishere/pve-edge-kernel/releases)
-page the kernel version you want to install and download the appropriate Debian package.
-Then, you can install the package as follows:
-
-```sh
-apt install ./pve-kernel-VERSION_amd64.deb
+apt install pve-kernel-xxxx
 ```
 
 ## Building manually
@@ -43,7 +35,7 @@ cd pve-arm64-kernel
 ```
 Then, select the branch of your likings (e.g. `v6.1`) and update the submodules:
 ```bash
-git checkout v6.1
+git checkout master
 git submodule update --init --depth=1 --recursive linux
 git submodule update --init --recursive
 ```
