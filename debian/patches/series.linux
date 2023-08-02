@@ -1,10 +1,8 @@
 pve/0001-Make-mkcompile_h-accept-an-alternate-timestamp-strin.patch
 pve/0002-wireless-Add-Debian-wireless-regdb-certificates.patch
 pve/0003-bridge-keep-MAC-of-first-assigned-port.patch
-pve/0004-pci-Enable-overrides-for-missing-ACS-capabilities-4..patch
 pve/0005-kvm-disable-default-dynamic-halt-polling-growth.patch
 pve/0006-net-core-downgrade-unregister_netdevice-refcount-lea.patch
-pve/0007-Revert-PCI-Coalesce-host-bridge-contiguous-apertures.patch
 pve/0008-PCI-Reinstate-PCI-Coalesce-host-bridge-contiguous-ap.patch
 pve/0009-do-not-generate-split-BTF-type-info-per-default.patch
 pve/0010-blk-cgroup-always-terminate-io.stat-lines.patch
@@ -12,13 +10,4 @@ pve/0011-drivers-firmware-Don-t-mark-as-busy-the-simple-frame.patch
 pve/0012-drm-simpledrm-Request-memory-region-in-driver.patch
 pve/0013-fbdev-simplefb-Request-memory-region-in-driver.patch
 pve/0014-NFSv4.1-provide-mount-option-to-toggle-trunking-disc.patch
-pve/0015-EDAC-amd64-Add-PCI-device-IDs-for-family-19h-model-5.patch
 pve/0016-bug-introduce-ASSERT_STRUCT_OFFSET.patch
-pve/0017-KVM-x86-emulator-update-the-emulation-mode-after-rsm.patch
-pve/0018-KVM-x86-emulator-smm-add-structs-for-KVM-s-smram-lay.patch
-pve/0019-KVM-x86-emulator-smm-use-smram-structs-in-the-common.patch
-pve/0020-KVM-x86-emulator-smm-use-smram-struct-for-32-bit-smr.patch
-pve/0021-KVM-x86-emulator-smm-use-smram-struct-for-64-bit-smr.patch
-pve/0022-KVM-x86-SVM-use-smram-structs.patch
-pve/0023-KVM-x86-SVM-don-t-save-SVM-state-to-SMRAM-when-VM-is.patch
-pve/0024-KVM-x86-emulator-smm-preserve-interrupt-shadow-in-SM.patch
