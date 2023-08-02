@@ -1,3 +1,9 @@
+pve-kernel (5.15.123) generic; urgency=medium
+
+  * Update to Linux 5.15.123
+
+ -- Jiangcuo <jiangcuo@bingsin.com>  Wed, 02 Aug 2023 11:51:37 +0800
+
 pve-kernel (5.15.107) generic; urgency=medium
 
   * Update to Linux 5.15.107
