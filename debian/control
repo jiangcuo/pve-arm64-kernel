@@ -56,7 +56,8 @@ Package: pve-kernel-6.5-pve
 Architecture: all
 Section: admin
 Priority: optional
-Depends: pve-kernel-6.5.0-pve,
+Depends: pve-firmware,
+         pve-kernel-6.5.0-pve,
 Description: Latest Proxmox Edge Kernel Image
  This is a metapackage which will install the latest available
  Proxmox Edge kernel from the 6.5 series.

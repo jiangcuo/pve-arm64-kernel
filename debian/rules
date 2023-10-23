@@ -1,12 +1,13 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 include /usr/share/dpkg/default.mk
+export DH_VERBOSE = 1
 
 # Common variables for all architectures
 include debian/rules.d/common.mk
 
 # Pull in some arch specific stuff
-include debian/rules.d/arch/${DEB_BUILD_ARCH}.mk
+include debian/rules.d/arch/loong64.mk
 
 BUILD_DIR ?= ${CURDIR}
 KERNEL_SRC := linux
@@ -34,24 +35,24 @@ override_dh_quilt_patch:
 		QUILT_PATCHES=../debian/patches  \
 		QUILT_SERIES=series.linux \
 		quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
-#	cd ${ZFS_SRC}; \
-#    	QUILT_PATCHES=../debian/patches  \
-#    	QUILT_SERIES=series.zfs \
-#    	quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
+	cd ${ZFS_SRC}; \
+    	QUILT_PATCHES=../debian/patches  \
+    	QUILT_SERIES=series.zfs \
+    	quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
 
 override_dh_quilt_unpatch:
 	cd ${KERNEL_SRC}; \
 		QUILT_PATCHES=../debian/patches \
 		QUILT_SERIES=series.linux \
 		quilt --quiltrc /dev/null pop -a || test $$? = 2
-#	cd ${ZFS_SRC}; \
-#    	QUILT_PATCHES=../debian/patches \
-#    	QUILT_SERIES=series.zfs \
-#    	quilt --quiltrc /dev/null pop -a || test $$? = 2
-#	rm -rf ${KERNEL_SRC}/.pc ${ZFS_SRC}/.pc
+	cd ${ZFS_SRC}; \
+    	QUILT_PATCHES=../debian/patches \
+    	QUILT_SERIES=series.zfs \
+    	quilt --quiltrc /dev/null pop -a || test $$? = 2
+	rm -rf ${KERNEL_SRC}/.pc ${ZFS_SRC}/.pc
 
-#override_dh_autoreconf:
-#	dh_autoreconf -D ${ZFS_SRC}
+override_dh_autoreconf:
+	dh_autoreconf -D ${ZFS_SRC}
 
 override_dh_auto_configure: ${KERNEL_SRC}/.config
 
@@ -64,8 +65,8 @@ override_dh_auto_build:
 		LOCALVERSION="${LOCALVERSION}" \
 		KBUILD_BUILD_VERSION_TIMESTAMP="${PKG_DISTRIBUTOR} ${DEB_VERSION} (${PKG_DATE_UTC_ISO})"
 	# ZFS
-#	dh_auto_configure -D ${ZFS_SRC} -- CC="${PVE_ZFS_CC}" --with-config=kernel --with-linux=$(realpath ${KERNEL_SRC}) --with-linux-obj=$(realpath ${KERNEL_SRC})
-#	dh_auto_build -D ${ZFS_SRC}
+	dh_auto_configure -D ${ZFS_SRC} -- HOSTCC="${PVE_KERNEL_CC}" CC="${PVE_ZFS_CC}" --with-config=kernel --with-linux=$(realpath ${KERNEL_SRC}) --with-linux-obj=$(realpath ${KERNEL_SRC})
+	dh_auto_build -D ${ZFS_SRC}
 
 override_dh_auto_install: debian/SOURCE .install_mark .tools_install_mark .headers_install_mark .usr_headers_install_mark
 	dh_installdocs -A debian/copyright debian/SOURCE
@@ -77,8 +78,8 @@ override_dh_auto_install: debian/SOURCE .install_mark .tools_install_mark .heade
 
 override_dh_auto_clean: debian/control
 	dh_clean
-#	dh_auto_clean -D ${KERNEL_SRC}
-#	dh_auto_clean -D ${ZFS_SRC}
+	dh_auto_clean -D ${KERNEL_SRC}
+	dh_auto_clean -D ${ZFS_SRC}
 	rm -f ${PVE_KERNEL_TEMPLATES} ${PVE_HEADER_TEMPLATES}
 	rm -f debian/SOURCE debian/*.tmp .*_mark
 
@@ -110,9 +111,9 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 #	install -m 644 ${ZFS_SRC}/module/unicode/zunicode.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 #	install -m 644 ${ZFS_SRC}/module/zcommon/zcommon.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 #	install -m 644 ${ZFS_SRC}/module/icp/icp.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/zfs/zfs.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
+	install -m 644 ${ZFS_SRC}/module/zfs.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 #	install -m 644 ${ZFS_SRC}/module/lua/zlua.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/spl/spl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
+	install -m 644 ${ZFS_SRC}/module/spl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 #	install -m 644 ${ZFS_SRC}/module/zstd/zzstd.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 	# remove firmware
 	rm -rf debian/${PVE_KERNEL_PKG}/lib/firmware
@@ -133,6 +134,7 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 .tools_compile_mark:
 	dh_auto_build -D ${KERNEL_SRC}/tools/perf -- prefix=/usr \
 		HAVE_NO_LIBBFD=1 \
+		CC="${PVE_KERNEL_CC}" \ 
 		HAVE_CPLUS_DEMANGLE_SUPPORT=1 \
 		NO_LIBPYTHON=1 \
 		NO_LIBPERL=1 \
@@ -141,7 +143,7 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 #	echo "checking GPL-2 only perf binary for library linkage with incompatible licenses.."
 #	! ldd ${KERNEL_SRC}/tools/perf/perf | grep -q -E '\blibbfd'
 #	! ldd ${KERNEL_SRC}/tools/perf/perf | grep -q -E '\blibcrypto'
-	${MAKE} -C ${KERNEL_SRC}/tools/perf man
+	${MAKE} -C ${KERNEL_SRC}/tools/perf  man
 	touch $@
 
 .tools_install_mark: .tools_compile_mark
