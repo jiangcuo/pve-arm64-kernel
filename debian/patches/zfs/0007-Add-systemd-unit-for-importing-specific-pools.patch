@@ -13,16 +13,28 @@ can contain characters which will be escaped by systemd.
 Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
 Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
- etc/systemd/system/50-zfs.preset.in       |  1 +
- etc/systemd/system/Makefile.am            |  1 +
+ etc/Makefile.am                           |  1 +
+ etc/systemd/system/50-zfs.preset          |  1 +
  etc/systemd/system/zfs-import@.service.in | 16 ++++++++++++++++
  3 files changed, 18 insertions(+)
  create mode 100644 etc/systemd/system/zfs-import@.service.in
 
-diff --git a/etc/systemd/system/50-zfs.preset.in b/etc/systemd/system/50-zfs.preset.in
+diff --git a/etc/Makefile.am b/etc/Makefile.am
+index 7187762d3..de131dc87 100644
+--- a/etc/Makefile.am
++++ b/etc/Makefile.am
+@@ -54,6 +54,7 @@ dist_systemdpreset_DATA = \
+ systemdunit_DATA = \
+ 	%D%/systemd/system/zfs-import-cache.service \
+ 	%D%/systemd/system/zfs-import-scan.service \
++	%D%/systemd/system/zfs-import@.service \
+ 	%D%/systemd/system/zfs-import.target \
+ 	%D%/systemd/system/zfs-mount.service \
+ 	%D%/systemd/system/zfs-scrub-monthly@.timer \
+diff --git a/etc/systemd/system/50-zfs.preset b/etc/systemd/system/50-zfs.preset
 index e4056a92c..030611419 100644
---- a/etc/systemd/system/50-zfs.preset.in
-+++ b/etc/systemd/system/50-zfs.preset.in
+--- a/etc/systemd/system/50-zfs.preset
++++ b/etc/systemd/system/50-zfs.preset
 @@ -1,6 +1,7 @@
  # ZFS is enabled by default
  enable zfs-import-cache.service
@@ -31,18 +43,6 @@ index e4056a92c..030611419 100644
  enable zfs-import.target
  enable zfs-mount.service
  enable zfs-share.service
-diff --git a/etc/systemd/system/Makefile.am b/etc/systemd/system/Makefile.am
-index 35f833de5..af3ae597c 100644
---- a/etc/systemd/system/Makefile.am
-+++ b/etc/systemd/system/Makefile.am
-@@ -7,6 +7,7 @@ systemdunit_DATA = \
- 	zfs-zed.service \
- 	zfs-import-cache.service \
- 	zfs-import-scan.service \
-+	zfs-import@.service \
- 	zfs-mount.service \
- 	zfs-share.service \
- 	zfs-volume-wait.service \
 diff --git a/etc/systemd/system/zfs-import@.service.in b/etc/systemd/system/zfs-import@.service.in
 new file mode 100644
 index 000000000..9b4ee9371

@@ -6,5 +6,6 @@ zfs/0005-Enable-zed-emails.patch
 zfs/0006-dont-symlink-zed-scripts.patch
 zfs/0007-Add-systemd-unit-for-importing-specific-pools.patch
 zfs/0008-Patch-move-manpage-arcstat-1-to-arcstat-8.patch
-zfs/0009-arcstat-Fix-integer-division-with-python3.patch
-zfs/0010-arc-stat-summary-guard-access-to-l2arc-MFU-MRU-stats.patch
+zfs/0009-arc-stat-summary-guard-access-to-l2arc-MFU-MRU-stats.patch
+zfs/0010-zvol-Remove-broken-blk-mq-optimization.patch
+zfs/0011-Revert-zvol-Temporally-disable-blk-mq.patch
