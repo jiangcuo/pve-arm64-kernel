@@ -105,15 +105,8 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 	
 	# install zfs drivers
 	install -d -m 0755 debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/avl/zavl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/nvpair/znvpair.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/unicode/zunicode.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/zcommon/zcommon.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/icp/icp.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/zfs/zfs.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/lua/zlua.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/spl/spl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-	install -m 644 ${ZFS_SRC}/module/zstd/zzstd.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
+	install -m 644 ${ZFS_SRC}/module/zfs.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
+	install -m 644 ${ZFS_SRC}/module/spl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 	# remove firmware
 	rm -rf debian/${PVE_KERNEL_PKG}/lib/firmware
 	# strip debug info
