@@ -31,17 +31,6 @@ Build-Conflicts: pve-headers-@KVNAME@,
 Vcs-Git: git://github.com/fabianishere/pve-edge-kernel.git
 Vcs-Browser: https://github.com/fabianishere/pve-edge-kernel
 
-Package: linux-tools-@KVMAJMIN@
-Architecture: any
-Section: devel
-Priority: optional
-Depends: linux-base,
-         ${misc:Depends},
-         ${shlibs:Depends},
-Description: Linux kernel version specific tools for version @KVMAJMIN@
- This package provides the architecture dependent parts for kernel
- version locked tools (such as perf and x86_energy_perf_policy)
-
 Package: pve-headers-@KVMAJMIN@-edge
 Architecture: all
 Section: admin

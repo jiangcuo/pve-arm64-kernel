@@ -1,7 +1,0 @@
-pve/0001-Make-mkcompile_h-accept-an-alternate-timestamp-strin.patch
-pve/0002-wireless-Add-Debian-wireless-regdb-certificates.patch
-pve/0003-bridge-keep-MAC-of-first-assigned-port.patch
-#pve/0004-pci-Enable-overrides-for-missing-ACS-capabilities-4..patch
-pve/0005-kvm-disable-default-dynamic-halt-polling-growth.patch
-pve/0006-net-core-downgrade-unregister_netdevice-refcount-lea.patch
-pve/0007-Revert-fortify-Do-not-cast-to-unsigned-char.patch

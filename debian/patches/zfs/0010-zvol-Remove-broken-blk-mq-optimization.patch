@@ -1,0 +1,99 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Tony Hutter <hutter2@llnl.gov>
+Date: Mon, 23 Oct 2023 14:45:06 -0700
+Subject: [PATCH] zvol: Remove broken blk-mq optimization
+
+This fix removes a dubious optimization in zfs_uiomove_bvec_rq()
+that saved the iterator contents of a rq_for_each_segment().  This
+optimization allowed restoring the "saved state" from a previous
+rq_for_each_segment() call on the same uio so that you wouldn't
+need to iterate though each bvec on every zfs_uiomove_bvec_rq() call.
+However, if the kernel is manipulating the requests/bios/bvecs under
+the covers between zfs_uiomove_bvec_rq() calls, then it could result
+in corruption from using the "saved state".  This optimization
+results in an unbootable system after installing an OS on a zvol
+with blk-mq enabled.
+
+Reviewed-by: Brian Behlendorf <behlendorf1@llnl.gov>
+Signed-off-by: Tony Hutter <hutter2@llnl.gov>
+Closes #15351
+(cherry picked from commit 7c9b6fed16ed5034fd1cdfdaedfad93dc97b1557)
+Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
+---
+ include/os/linux/spl/sys/uio.h |  8 --------
+ module/os/linux/zfs/zfs_uio.c  | 29 -----------------------------
+ 2 files changed, 37 deletions(-)
+
+diff --git a/include/os/linux/spl/sys/uio.h b/include/os/linux/spl/sys/uio.h
+index cce097e16..a4b600004 100644
+--- a/include/os/linux/spl/sys/uio.h
++++ b/include/os/linux/spl/sys/uio.h
+@@ -73,13 +73,6 @@ typedef struct zfs_uio {
+ 	size_t		uio_skip;
+ 
+ 	struct request	*rq;
+-
+-	/*
+-	 * Used for saving rq_for_each_segment() state between calls
+-	 * to zfs_uiomove_bvec_rq().
+-	 */
+-	struct req_iterator iter;
+-	struct bio_vec bv;
+ } zfs_uio_t;
+ 
+ 
+@@ -138,7 +131,6 @@ zfs_uio_bvec_init(zfs_uio_t *uio, struct bio *bio, struct request *rq)
+ 	} else {
+ 		uio->uio_bvec = NULL;
+ 		uio->uio_iovcnt = 0;
+-		memset(&uio->iter, 0, sizeof (uio->iter));
+ 	}
+ 
+ 	uio->uio_loffset = io_offset(bio, rq);
+diff --git a/module/os/linux/zfs/zfs_uio.c b/module/os/linux/zfs/zfs_uio.c
+index 3efd4ab15..c2ed67c43 100644
+--- a/module/os/linux/zfs/zfs_uio.c
++++ b/module/os/linux/zfs/zfs_uio.c
+@@ -204,22 +204,6 @@ zfs_uiomove_bvec_rq(void *p, size_t n, zfs_uio_rw_t rw, zfs_uio_t *uio)
+ 	this_seg_start = orig_loffset;
+ 
+ 	rq_for_each_segment(bv, rq, iter) {
+-		if (uio->iter.bio) {
+-			/*
+-			 * If uio->iter.bio is present, then we know we've saved
+-			 * uio->iter from a previous call to this function, and
+-			 * we can skip ahead in this rq_for_each_segment() loop
+-			 * to where we last left off.  That way, we don't need
+-			 * to iterate over tons of segments we've already
+-			 * processed - we can just restore the "saved state".
+-			 */
+-			iter = uio->iter;
+-			bv = uio->bv;
+-			this_seg_start = uio->uio_loffset;
+-			memset(&uio->iter, 0, sizeof (uio->iter));
+-			continue;
+-		}
+-
+ 		/*
+ 		 * Lookup what the logical offset of the last byte of this
+ 		 * segment is.
+@@ -260,19 +244,6 @@ zfs_uiomove_bvec_rq(void *p, size_t n, zfs_uio_rw_t rw, zfs_uio_t *uio)
+ 			copied = 1;	/* We copied some data */
+ 		}
+ 
+-		if (n == 0) {
+-			/*
+-			 * All done copying.  Save our 'iter' value to the uio.
+-			 * This allows us to "save our state" and skip ahead in
+-			 * the rq_for_each_segment() loop the next time we call
+-			 * call zfs_uiomove_bvec_rq() on this uio (which we
+-			 * will be doing for any remaining data in the uio).
+-			 */
+-			uio->iter = iter; /* make a copy of the struct data */
+-			uio->bv = bv;
+-			return (0);
+-		}
+-
+ 		this_seg_start = this_seg_end + 1;
+ 	}
+ 

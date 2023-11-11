@@ -1,3 +1,9 @@
+pve-kernel (6.5-rc2-1) pve; urgency=medium
+
+  * Add zfs 2.2.0 support
+
+ -- jiangcuo <jiangcuo@bingsin.com>  Fri, 10 Nov 2023 20:12:41 +0800
+
 pve-kernel (6.5-rc2) pve; urgency=medium
 
   * Build for loong64 without zfs  

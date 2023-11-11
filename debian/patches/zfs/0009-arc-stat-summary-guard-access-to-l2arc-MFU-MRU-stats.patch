@@ -22,15 +22,15 @@ l2_bufc_data_asize l2_bufc_metadata_asize to .get accessor
 Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
 Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
- cmd/arc_summary/arc_summary3 | 28 ++++++++++++++--------------
- cmd/arcstat/arcstat.in       | 14 +++++++-------
+ cmd/arc_summary | 28 ++++++++++++++--------------
+ cmd/arcstat.in  | 14 +++++++-------
  2 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/cmd/arc_summary/arc_summary3 b/cmd/arc_summary/arc_summary3
-index 9d0c2d30d..fd2581ae2 100755
---- a/cmd/arc_summary/arc_summary3
-+++ b/cmd/arc_summary/arc_summary3
-@@ -609,13 +609,13 @@ def section_arc(kstats_dict):
+diff --git a/cmd/arc_summary b/cmd/arc_summary
+index 426e02070..9de198150 100755
+--- a/cmd/arc_summary
++++ b/cmd/arc_summary
+@@ -655,13 +655,13 @@ def section_arc(kstats_dict):
      prt_i1('L2 cached evictions:', f_bytes(arc_stats['evict_l2_cached']))
      prt_i1('L2 eligible evictions:', f_bytes(arc_stats['evict_l2_eligible']))
      prt_i2('L2 eligible MFU evictions:',
@@ -48,7 +48,7 @@ index 9d0c2d30d..fd2581ae2 100755
      prt_i1('L2 ineligible evictions:',
             f_bytes(arc_stats['evict_l2_ineligible']))
      print()
-@@ -757,20 +757,20 @@ def section_l2arc(kstats_dict):
+@@ -851,20 +851,20 @@ def section_l2arc(kstats_dict):
             f_perc(arc_stats['l2_hdr_size'], arc_stats['l2_size']),
             f_bytes(arc_stats['l2_hdr_size']))
      prt_i2('MFU allocated size:',
@@ -79,11 +79,11 @@ index 9d0c2d30d..fd2581ae2 100755
  
      print()
      prt_1('L2ARC breakdown:', f_hits(l2_access_total))
-diff --git a/cmd/arcstat/arcstat.in b/cmd/arcstat/arcstat.in
-index d2b2e28d1..8004940b3 100755
---- a/cmd/arcstat/arcstat.in
-+++ b/cmd/arcstat/arcstat.in
-@@ -482,8 +482,8 @@ def calculate():
+diff --git a/cmd/arcstat.in b/cmd/arcstat.in
+index 8df1c62f7..833348d0e 100755
+--- a/cmd/arcstat.in
++++ b/cmd/arcstat.in
+@@ -565,8 +565,8 @@ def calculate():
      v["el2skip"] = d["evict_l2_skip"] // sint
      v["el2cach"] = d["evict_l2_cached"] // sint
      v["el2el"] = d["evict_l2_eligible"] // sint
@@ -94,7 +94,7 @@ index d2b2e28d1..8004940b3 100755
      v["el2inel"] = d["evict_l2_ineligible"] // sint
      v["mtxmis"] = d["mutex_miss"] // sint
  
-@@ -498,11 +498,11 @@ def calculate():
+@@ -581,11 +581,11 @@ def calculate():
          v["l2size"] = cur["l2_size"]
          v["l2bytes"] = d["l2_read_bytes"] // sint
  

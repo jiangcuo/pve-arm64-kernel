@@ -68,7 +68,7 @@ override_dh_auto_build:
 	dh_auto_configure -D ${ZFS_SRC} -- HOSTCC="${PVE_KERNEL_CC}" CC="${PVE_ZFS_CC}" --with-config=kernel --with-linux=$(realpath ${KERNEL_SRC}) --with-linux-obj=$(realpath ${KERNEL_SRC})
 	dh_auto_build -D ${ZFS_SRC}
 
-override_dh_auto_install: debian/SOURCE .install_mark .tools_install_mark .headers_install_mark .usr_headers_install_mark
+override_dh_auto_install: debian/SOURCE .install_mark  .headers_install_mark .usr_headers_install_mark
 	dh_installdocs -A debian/copyright debian/SOURCE
 	dh_installchangelogs
 	dh_installman
@@ -105,16 +105,9 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 	${MAKE} -C ${KERNEL_SRC} INSTALL_PATH=${BUILD_DIR}/debian/${PVE_KERNEL_PKG}/boot dtbs_install
 	
 	# install zfs drivers
-#	install -d -m 0755 debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/avl/zavl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/nvpair/znvpair.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/unicode/zunicode.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/zcommon/zcommon.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/icp/icp.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
+	install -d -m 0755 debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 	install -m 644 ${ZFS_SRC}/module/zfs.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/lua/zlua.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 	install -m 644 ${ZFS_SRC}/module/spl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/zstd/zzstd.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 	# remove firmware
 	rm -rf debian/${PVE_KERNEL_PKG}/lib/firmware
 	# strip debug info
@@ -131,32 +124,6 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 	touch $@
 
 ## Kernel tools
-.tools_compile_mark:
-	dh_auto_build -D ${KERNEL_SRC}/tools/perf -- prefix=/usr \
-		HAVE_NO_LIBBFD=1 \
-		CC="${PVE_KERNEL_CC}" \ 
-		HAVE_CPLUS_DEMANGLE_SUPPORT=1 \
-		NO_LIBPYTHON=1 \
-		NO_LIBPERL=1 \
-		NO_LIBCRYPTO=1 \
-		PYTHON=python3
-#	echo "checking GPL-2 only perf binary for library linkage with incompatible licenses.."
-#	! ldd ${KERNEL_SRC}/tools/perf/perf | grep -q -E '\blibbfd'
-#	! ldd ${KERNEL_SRC}/tools/perf/perf | grep -q -E '\blibcrypto'
-	${MAKE} -C ${KERNEL_SRC}/tools/perf  man
-	touch $@
-
-.tools_install_mark: .tools_compile_mark
-	rm -rf debian/${LINUX_TOOLS_PKG}
-	mkdir -p debian/${LINUX_TOOLS_PKG}/usr/bin
-	mkdir -p debian/${LINUX_TOOLS_PKG}/usr/share/man/man1
-	install -m 755 ${BUILD_DIR}/${KERNEL_SRC}/tools/perf/perf debian/${LINUX_TOOLS_PKG}/usr/bin/perf_$(KERNEL_MAJMIN)
-	for i in ${BUILD_DIR}/${KERNEL_SRC}/tools/perf/Documentation/*.1; do \
-	    fname="$${i##*/}"; manname="$${fname%.1}"; \
-	    install -m644 "$$i" "debian/${LINUX_TOOLS_PKG}/usr/share/man/man1/$${manname}_$(KERNEL_MAJMIN).1"; \
-	done
-	touch $@
-
 ## Headers
 PVE_HEADER_TEMPLATES := $(patsubst debian/templates/pve-headers.%.in, debian/${PVE_HEADER_PKG}.%, $(wildcard debian/templates/pve-headers.*.in))
 
