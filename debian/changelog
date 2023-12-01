@@ -1,3 +1,9 @@
+pve-kernel (6.6.0) pve; urgency=medium
+
+  * Update to linux kernel 6.6.0
+
+ -- jiangcuo <jiangcuo@bingsin.com>  Fri, 01 Dec 2023 10:21:55 +0800
+
 pve-kernel (6.5-rc2-1) pve; urgency=medium
 
   * Add zfs 2.2.0 support
