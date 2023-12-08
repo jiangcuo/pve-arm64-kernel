@@ -1,3 +1,9 @@
+pve-kernel (6.6.0+1) pve; urgency=medium
+
+  * Add lsx lasx support
+
+ -- jiangcuo <jiangcuo@bingsin.com>  Fri, 08 Dec 2023 07:51:16 +0000
+
 pve-kernel (6.6.0) pve; urgency=medium
 
   * Update to linux kernel 6.6.0
