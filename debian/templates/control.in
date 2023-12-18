@@ -1,7 +1,7 @@
 Source: pve-kernel
 Section: devel
 Priority: optional
-Maintainer: Jiang Cuo <jiangcuo@bingsin.com>
+Maintainer: Jiangcuo <jiangcuo@bingsin.com>
 Build-Depends: asciidoc,
                automake,
                bc,
