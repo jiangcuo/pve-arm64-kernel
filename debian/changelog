@@ -1,4 +1,4 @@
-pve-kernel (5.15.143-1) Port; urgency=medium
+pve-kernel (5.15.143-1) generic; urgency=medium
 
   * Update to Linux 5.15.143.
 
