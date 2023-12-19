@@ -75,7 +75,7 @@ wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v$LINUX_VERSION/crack.bundle
 
 echo "Generating entry for change log..."
 # Generate a changelog entry
-debchange -v $LINUX_VERSION-$LINUX_PACKAGE_RELEASE -D edge --force-distribution -U -M "Update to Linux $LINUX_VERSION."
+debchange -v $LINUX_VERSION-$LINUX_PACKAGE_RELEASE -D Port --force-distribution -U -M "Update to Linux $LINUX_VERSION."
 
 echo "Cleaning up"
 rm -f debian/control
