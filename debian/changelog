@@ -1,4 +1,4 @@
-pve-kernel (6.1.68-1) edge; urgency=medium
+pve-kernel (6.1.68-1) generic; urgency=medium
 
   * Update to Linux 6.1.68.
 
