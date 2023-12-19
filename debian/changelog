@@ -1,3 +1,9 @@
+pve-kernel (5.15.143-1) Port; urgency=medium
+
+  * Update to Linux 5.15.143.
+
+ -- Jiangcuo <jiangcuo@bingsin.com>  Tue, 19 Dec 2023 05:49:24 +0100
+
 pve-kernel (5.15.123) generic; urgency=medium
 
   * Update to Linux 5.15.123
