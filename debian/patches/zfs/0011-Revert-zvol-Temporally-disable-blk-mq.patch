@@ -1,0 +1,123 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Tony Hutter <hutter2@llnl.gov>
+Date: Mon, 23 Oct 2023 14:39:59 -0700
+Subject: [PATCH] Revert "zvol: Temporally disable blk-mq"
+
+This reverts commit aefb6a2bd6c24597cde655e9ce69edd0a4c34357.
+
+aefb6a2bd temporally disabled blk-mq until we could fix a fix for
+
+Signed-off-by: Tony Hutter <hutter2@llnl.gov>
+Closes #15439
+(cherry picked from commit 05c4710e8958832afc2868102c9535a4f18115be)
+Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
+---
+ man/man4/zfs.4                       | 57 ++++++++++++++++++++++++++++
+ module/os/linux/zfs/zvol_os.c        | 12 ++++++
+ tests/zfs-tests/include/tunables.cfg |  2 +-
+ 3 files changed, 70 insertions(+), 1 deletion(-)
+
+diff --git a/man/man4/zfs.4 b/man/man4/zfs.4
+index 71a3e67ee..cfadd79d8 100644
+--- a/man/man4/zfs.4
++++ b/man/man4/zfs.4
+@@ -2317,6 +2317,63 @@ If
+ .Sy zvol_threads
+ to the number of CPUs present or 32 (whichever is greater).
+ .
++.It Sy zvol_blk_mq_threads Ns = Ns Sy 0 Pq uint
++The number of threads per zvol to use for queuing IO requests.
++This parameter will only appear if your kernel supports
++.Li blk-mq
++and is only read and assigned to a zvol at zvol load time.
++If
++.Sy 0
++(the default) then internally set
++.Sy zvol_blk_mq_threads
++to the number of CPUs present.
++.
++.It Sy zvol_use_blk_mq Ns = Ns Sy 0 Ns | Ns 1 Pq uint
++Set to
++.Sy 1
++to use the
++.Li blk-mq
++API for zvols.
++Set to
++.Sy 0
++(the default) to use the legacy zvol APIs.
++This setting can give better or worse zvol performance depending on
++the workload.
++This parameter will only appear if your kernel supports
++.Li blk-mq
++and is only read and assigned to a zvol at zvol load time.
++.
++.It Sy zvol_blk_mq_blocks_per_thread Ns = Ns Sy 8 Pq uint
++If
++.Sy zvol_use_blk_mq
++is enabled, then process this number of
++.Sy volblocksize Ns -sized blocks per zvol thread.
++This tunable can be use to favor better performance for zvol reads (lower
++values) or writes (higher values).
++If set to
++.Sy 0 ,
++then the zvol layer will process the maximum number of blocks
++per thread that it can.
++This parameter will only appear if your kernel supports
++.Li blk-mq
++and is only applied at each zvol's load time.
++.
++.It Sy zvol_blk_mq_queue_depth Ns = Ns Sy 0 Pq uint
++The queue_depth value for the zvol
++.Li blk-mq
++interface.
++This parameter will only appear if your kernel supports
++.Li blk-mq
++and is only applied at each zvol's load time.
++If
++.Sy 0
++(the default) then use the kernel's default queue depth.
++Values are clamped to the kernel's
++.Dv BLKDEV_MIN_RQ
++and
++.Dv BLKDEV_MAX_RQ Ns / Ns Dv BLKDEV_DEFAULT_RQ
++limits.
++.
+ .It Sy zvol_volmode Ns = Ns Sy 1 Pq uint
+ Defines zvol block devices behaviour when
+ .Sy volmode Ns = Ns Sy default :
+diff --git a/module/os/linux/zfs/zvol_os.c b/module/os/linux/zfs/zvol_os.c
+index 76521c959..7a95b54bd 100644
+--- a/module/os/linux/zfs/zvol_os.c
++++ b/module/os/linux/zfs/zvol_os.c
+@@ -1620,6 +1620,18 @@ MODULE_PARM_DESC(zvol_prefetch_bytes, "Prefetch N bytes at zvol start+end");
+ module_param(zvol_volmode, uint, 0644);
+ MODULE_PARM_DESC(zvol_volmode, "Default volmode property value");
+ 
++#ifdef HAVE_BLK_MQ
++module_param(zvol_blk_mq_queue_depth, uint, 0644);
++MODULE_PARM_DESC(zvol_blk_mq_queue_depth, "Default blk-mq queue depth");
++
++module_param(zvol_use_blk_mq, uint, 0644);
++MODULE_PARM_DESC(zvol_use_blk_mq, "Use the blk-mq API for zvols");
++
++module_param(zvol_blk_mq_blocks_per_thread, uint, 0644);
++MODULE_PARM_DESC(zvol_blk_mq_blocks_per_thread,
++    "Process volblocksize blocks per thread");
++#endif
++
+ #ifndef HAVE_BLKDEV_GET_ERESTARTSYS
+ module_param(zvol_open_timeout_ms, uint, 0644);
+ MODULE_PARM_DESC(zvol_open_timeout_ms, "Timeout for ZVOL open retries");
+diff --git a/tests/zfs-tests/include/tunables.cfg b/tests/zfs-tests/include/tunables.cfg
+index 8010a9451..80e7bcb3b 100644
+--- a/tests/zfs-tests/include/tunables.cfg
++++ b/tests/zfs-tests/include/tunables.cfg
+@@ -89,7 +89,7 @@ VDEV_VALIDATE_SKIP		vdev.validate_skip		vdev_validate_skip
+ VOL_INHIBIT_DEV			UNSUPPORTED			zvol_inhibit_dev
+ VOL_MODE			vol.mode			zvol_volmode
+ VOL_RECURSIVE			vol.recursive			UNSUPPORTED
+-VOL_USE_BLK_MQ			UNSUPPORTED			UNSUPPORTED
++VOL_USE_BLK_MQ			UNSUPPORTED			zvol_use_blk_mq
+ XATTR_COMPAT			xattr_compat			zfs_xattr_compat
+ ZEVENT_LEN_MAX			zevent.len_max			zfs_zevent_len_max
+ ZEVENT_RETAIN_MAX		zevent.retain_max		zfs_zevent_retain_max
