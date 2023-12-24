@@ -1,0 +1,2 @@
+pve/loongarchlinux6.6.patch
+pve/LoongArch-Change-SHMLBA-from-SZ_64K-to-PAGE_SIZE.patch
