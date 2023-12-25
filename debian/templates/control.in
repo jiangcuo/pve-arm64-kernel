@@ -1,7 +1,7 @@
 Source: pve-kernel
 Section: devel
 Priority: optional
-Maintainer: Fabian Mastenbroek <mail.fabianm@gmail.com>
+Maintainer: Jiangcuo <jiangcuo@bingsin.com>
 Build-Depends: asciidoc,
                automake,
                bc,
@@ -28,8 +28,6 @@ Build-Depends: asciidoc,
                zlib1g-dev,
                zstd
 Build-Conflicts: pve-headers-@KVNAME@,
-Vcs-Git: git://github.com/fabianishere/pve-edge-kernel.git
-Vcs-Browser: https://github.com/fabianishere/pve-edge-kernel
 
 Package: pve-headers-@KVMAJMIN@-edge
 Architecture: all
