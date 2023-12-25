@@ -1,8 +1,10 @@
 # Proxmox Port kernels
-Custom Linux kernels for Proxmox VE loongarch64
+Custom Linux kernels for Proxmox VE loongarch64 4k page-table
 
-6.5 kernel with kvm for 3A5000/3A6000. 
-No zfs support now!
+Support zfs-2.2.2.
+
+Proxmox-backup-server need 4k page kernel .So  we recommend use this branch if you want run proxmox-backup-server.
+
 
 ### Manual
 Alternatively, you may manually install the kernels. Select from the [Releases](https://github.com/fabianishere/pve-edge-kernel/releases)
@@ -80,7 +82,7 @@ apt remove pve-kernel-6.1* pve-headers-6.1*
 Questions, suggestions and contributions are welcome and appreciated!
 You can contribute in various meaningful ways:
 
-* Report a bug through [Github issues](https://github.com/jiangcuo/pve-arm64-kernel/issues).
+* Report a bug through [Github issues](https://github.com/jiangcuo/pve-port-kernel/issues).
 * Propose new patches and flavors for the project.
 * Contribute improvements to the documentation.
 * Provide feedback about how we can improve the project.
