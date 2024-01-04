@@ -4,6 +4,6 @@ debian/rules debian/control
 sudo apt install devscripts  rsync -y
 yes | sudo mk-build-deps --install --remove
 rm build -rf
-mkdir build && rsync -ra * build/
+mkdir build && rsync -ra * .git build/
 cd build
 dpkg-buildpackage -b -us -uc
