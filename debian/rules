@@ -20,7 +20,7 @@ debian/control: debian/templates/control.in
 	sed -e 's/@KVNAME@/${KVNAME}/g' -e 's/@KVMAJMIN@/${KERNEL_MAJMIN}/g' -e 's/edge/${DEB_DISTRIBUTION}/g' < debian/templates/control.in > debian/control
 
 debian/SOURCE:
-	echo "git clone git@github.com:fabianishere/pve-edge-kernel.git \
+	echo "git clone https://github.com/jiangcuo/pve-port-kernel.git \
 		  git checkout ${PKG_GIT_VERSION} \
 		  git submodule update --init --depth=1" > $@
 
@@ -86,7 +86,11 @@ override_dh_auto_clean: debian/control
 PVE_KERNEL_TEMPLATES := $(patsubst debian/templates/pve-kernel.%.in, debian/${PVE_KERNEL_PKG}.%, $(wildcard debian/templates/pve-kernel.*.in))
 
 ${KERNEL_SRC}/.config:
-	cp debian/config/config.pve ${KERNEL_SRC}/.config
+	python3 ${KERNEL_SRC}/debian/scripts/misc/annotations -f ${KERNEL_SRC}/debian.master/config/annotations -a ${DEB_BUILD_ARCH} --export > ${KERNEL_SRC}/debian.master/config/config.ubuntu
+	${KERNEL_SRC}/scripts/kconfig/merge_config.sh -m \
+		-O ${KERNEL_SRC} \
+		${KERNEL_SRC}/debian.master/config/config.ubuntu \
+		debian/config/config.pve
 	${MAKE} -C ${KERNEL_SRC} CC=${PVE_KERNEL_CC} olddefconfig
 
 debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
@@ -115,9 +119,9 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 	/sbin/depmod -b debian/${PVE_KERNEL_PKG}/ ${KVNAME}
 	# Autogenerate blacklist for watchdog devices (see README)
 	install -m 0755 -d debian/${PVE_KERNEL_PKG}/lib/modprobe.d
-#	ls debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/kernel/drivers/watchdog/ > debian/watchdog-blacklist.tmp
-#	echo ipmi_watchdog.ko >> debian/watchdog-blacklist.tmp
-#	cat debian/watchdog-blacklist.tmp | sed -e 's/^/blacklist /' -e 's/.ko$$//' | sort -u > debian/${PVE_KERNEL_PKG}/lib/modprobe.d/blacklist_${PVE_KERNEL_PKG}.conf
+	ls debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/kernel/drivers/watchdog/ > debian/watchdog-blacklist.tmp
+	echo ipmi_watchdog.ko >> debian/watchdog-blacklist.tmp
+	cat debian/watchdog-blacklist.tmp | sed -e 's/^/blacklist /' -e 's/.ko$$//' | sort -u > debian/${PVE_KERNEL_PKG}/lib/modprobe.d/blacklist_${PVE_KERNEL_PKG}.conf
 	rm -f debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/source
 	rm -f debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/build
 	touch $@
@@ -131,9 +135,9 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 		NO_LIBPERL=1 \
 		NO_LIBCRYPTO=1 \
 		PYTHON=python3
-#	echo "checking GPL-2 only perf binary for library linkage with incompatible licenses.."
-#	! ldd ${KERNEL_SRC}/tools/perf/perf | grep -q -E '\blibbfd'
-#	! ldd ${KERNEL_SRC}/tools/perf/perf | grep -q -E '\blibcrypto'
+	echo "checking GPL-2 only perf binary for library linkage with incompatible licenses.."
+	! ldd ${KERNEL_SRC}/tools/perf/perf | grep -q -E '\blibbfd'
+	! ldd ${KERNEL_SRC}/tools/perf/perf | grep -q -E '\blibcrypto'
 	${MAKE} -C ${KERNEL_SRC}/tools/perf man
 	touch $@
 
