@@ -35,24 +35,24 @@ override_dh_quilt_patch:
 		QUILT_PATCHES=../debian/patches  \
 		QUILT_SERIES=series.linux \
 		quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
-#	cd ${ZFS_SRC}; \
-#    	QUILT_PATCHES=../debian/patches  \
-#    	QUILT_SERIES=series.zfs \
-#    	quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
+	cd ${ZFS_SRC}; \
+	QUILT_PATCHES=../debian/patches  \
+	QUILT_SERIES=series.zfs \
+	quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
 
 override_dh_quilt_unpatch:
 	cd ${KERNEL_SRC}; \
 		QUILT_PATCHES=../debian/patches \
 		QUILT_SERIES=series.linux \
 		quilt --quiltrc /dev/null pop -a || test $$? = 2
-#	cd ${ZFS_SRC}; \
-#    	QUILT_PATCHES=../debian/patches \
-#    	QUILT_SERIES=series.zfs \
-#    	quilt --quiltrc /dev/null pop -a || test $$? = 2
-#	rm -rf ${KERNEL_SRC}/.pc ${ZFS_SRC}/.pc
+	cd ${ZFS_SRC}; \
+	QUILT_PATCHES=../debian/patches \
+	QUILT_SERIES=series.zfs \
+	quilt --quiltrc /dev/null pop -a || test $$? = 2
+	rm -rf ${KERNEL_SRC}/.pc ${ZFS_SRC}/.pc
 
-#override_dh_autoreconf:
-#	dh_autoreconf -D ${ZFS_SRC}
+override_dh_autoreconf:
+	dh_autoreconf -D ${ZFS_SRC}
 
 override_dh_auto_configure: ${KERNEL_SRC}/.config
 
@@ -65,8 +65,8 @@ override_dh_auto_build:
 		LOCALVERSION="${LOCALVERSION}" \
 		KBUILD_BUILD_VERSION_TIMESTAMP="${PKG_DISTRIBUTOR} ${DEB_VERSION} (${PKG_DATE_UTC_ISO})"
 	# ZFS
-	#dh_auto_configure -D ${ZFS_SRC} -- HOSTCC="${PVE_KERNEL_CC}" CC="${PVE_ZFS_CC}" --with-config=kernel --with-linux=$(realpath ${KERNEL_SRC}) --with-linux-obj=$(realpath ${KERNEL_SRC})
-	#dh_auto_build -D ${ZFS_SRC}
+	dh_auto_configure -D ${ZFS_SRC} -- HOSTCC="${PVE_KERNEL_CC}" CC="${PVE_ZFS_CC}" --with-config=kernel --with-linux=$(realpath ${KERNEL_SRC}) --with-linux-obj=$(realpath ${KERNEL_SRC})
+	dh_auto_build -D ${ZFS_SRC}
 
 override_dh_auto_install: debian/SOURCE .install_mark  .headers_install_mark .usr_headers_install_mark
 	dh_installdocs -A debian/copyright debian/SOURCE
@@ -79,7 +79,7 @@ override_dh_auto_install: debian/SOURCE .install_mark  .headers_install_mark .us
 override_dh_auto_clean: debian/control
 	dh_clean
 	dh_auto_clean -D ${KERNEL_SRC}
-#	dh_auto_clean -D ${ZFS_SRC}
+	dh_auto_clean -D ${ZFS_SRC}
 	rm -f ${PVE_KERNEL_TEMPLATES} ${PVE_HEADER_TEMPLATES}
 	rm -f debian/SOURCE debian/*.tmp .*_mark
 
@@ -105,9 +105,9 @@ debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
 	${MAKE} -C ${KERNEL_SRC} INSTALL_PATH=${BUILD_DIR}/debian/${PVE_KERNEL_PKG}/boot dtbs_install
 	
 	# install zfs drivers
-#	install -d -m 0755 debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/zfs.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
-#	install -m 644 ${ZFS_SRC}/module/spl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
+	install -d -m 0755 debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
+	install -m 644 ${ZFS_SRC}/module/zfs.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
+	install -m 644 ${ZFS_SRC}/module/spl.ko debian/${PVE_KERNEL_PKG}/lib/modules/${KVNAME}/zfs
 	# remove firmware
 	rm -rf debian/${PVE_KERNEL_PKG}/lib/firmware
 	# strip debug info

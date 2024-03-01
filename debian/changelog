@@ -1,3 +1,11 @@
+pve-kernel (6.7-6) pve; urgency=medium
+
+  * Update to linux 6.7.6
+  
+  * Add ZFS 2.2.3
+
+ -- root <jiangcuo@bingsin.com>  Fri, 01 Mar 2024 11:43:08 +0000
+
 pve-kernel (6.7-rc2) pve; urgency=medium
 
   * Update to linux 6.7-rc2
