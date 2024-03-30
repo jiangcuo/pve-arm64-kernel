@@ -1,4 +1,4 @@
-pve-kernel (6.7-6) pve2; urgency=medium
+pve-kernel (6.7-6) pve-1; urgency=medium
 
   * Add drivers
 
