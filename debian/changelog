@@ -1,3 +1,11 @@
+pve-kernel (6.7-6) pve2; urgency=medium
+
+  * Add drivers
+
+  * Add gsgpu & dwmac-loongson
+
+ -- root <root@loongbuilder.lan>  Sat, 30 Mar 2024 07:47:47 +0000
+
 pve-kernel (6.7-6) pve; urgency=medium
 
   * Update to linux 6.7.6
