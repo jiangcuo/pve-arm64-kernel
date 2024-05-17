@@ -1,0 +1,66 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Date: Sun, 12 Nov 2023 15:52:25 +0100
+Subject: [PATCH] zpool status: tighten bounds for noalloc stat availabillity
+
+When running zfs 2.2.0 userspace utilities with a kernel that still
+has 2.1.13 modules zpool status adds `(non-allocating)` next to the
+disk name of a single-disk pool.
+
+The reason for this seems to be that the patch adding the `vs_pspace` field was
+backported, but the one adding `vs_noalloc` was not.
+
+Itself that is not a problem, but in 2.2 `noalloc` was added before `psspace`,
+so the struct layout between 2.1.13 and 2.2.0 do NOT match anymore...
+
+I.e., the struct looks like the following at the end for ZFS 2.1.x:
+
+```
+typedef struct vdev_stat {
+    hrtime_t        vs_timestamp;           /* time since vdev load */
+    // snip
+    uint64_t        vs_logical_ashift;      /* vdev_logical_ashift  */
+    uint64_t        vs_physical_ashift;     /* vdev_physical_ashift */
+    uint64_t        vs_pspace;              /* physical capacity */
+} vdev_stat_t;
+```
+
+And like the following on ZFS 2.2.x:
+```
+typedef struct vdev_stat {
+    hrtime_t        vs_timestamp;           /* time since vdev load */
+    // snip
+    uint64_t        vs_logical_ashift;      /* vdev_logical_ashift  */
+    uint64_t        vs_physical_ashift;     /* vdev_physical_ashift */
+    uint64_t        vs_noalloc;             /* allocations halted?  */
+    uint64_t        vs_pspace;              /* physical capacity */
+} vdev_stat_t;
+```
+
+Resulting in 2.2.x user-space tooling interpreting the `vs_pspace` field from
+the 2.1.x kernel module as `vs_noalloc` field.
+
+For now, work-around that discrepancy by coupling the availability of
+the vs_noalloc field with the one of the vs_pspace one, as when both
+are returned from the module we can be sure that our struct layout
+matches again.
+
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+---
+ cmd/zpool/zpool_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/cmd/zpool/zpool_main.c b/cmd/zpool/zpool_main.c
+index 69bf9649a..fd42ce7c1 100644
+--- a/cmd/zpool/zpool_main.c
++++ b/cmd/zpool/zpool_main.c
+@@ -2616,7 +2616,8 @@ print_status_config(zpool_handle_t *zhp, status_cbdata_t *cb, const char *name,
+ 
+ 	if (vs->vs_scan_removing != 0) {
+ 		(void) printf(gettext("  (removing)"));
+-	} else if (VDEV_STAT_VALID(vs_noalloc, vsc) && vs->vs_noalloc != 0) {
++	} else if (VDEV_STAT_VALID(vs_pspace, vsc)
++		       && VDEV_STAT_VALID(vs_noalloc, vsc) && vs->vs_noalloc != 0) {
+ 		(void) printf(gettext("  (non-allocating)"));
+ 	}
+ 

@@ -10,13 +10,16 @@ by scanning /dev/disk/by-id, irrespective of the existence and content of
 the instance name is used unescaped (see systemd.unit(5)), since zpool names
 can contain characters which will be escaped by systemd.
 
+Its instances are ordered before the other two "big" import services to avoid
+races and spurious (cosmetic!) service failures.
+
 Signed-off-by: Stoiko Ivanov <s.ivanov@proxmox.com>
 Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
  etc/Makefile.am                           |  1 +
  etc/systemd/system/50-zfs.preset          |  1 +
- etc/systemd/system/zfs-import@.service.in | 16 ++++++++++++++++
- 3 files changed, 18 insertions(+)
+ etc/systemd/system/zfs-import@.service.in | 18 ++++++++++++++++
+ 3 files changed, 20 insertions(+)
  create mode 100644 etc/systemd/system/zfs-import@.service.in
 
 diff --git a/etc/Makefile.am b/etc/Makefile.am
@@ -48,7 +51,7 @@ new file mode 100644
 index 000000000..9b4ee9371
 --- /dev/null
 +++ b/etc/systemd/system/zfs-import@.service.in
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,18 @@
 +[Unit]
 +Description=Import ZFS pool %i
 +Documentation=man:zpool(8)
@@ -57,6 +60,8 @@ index 000000000..9b4ee9371
 +After=cryptsetup.target
 +After=multipathd.target
 +Before=zfs-import.target
++Before=zfs-import-scan.service
++Before=zfs-import-cache.service
 +
 +[Service]
 +Type=oneshot

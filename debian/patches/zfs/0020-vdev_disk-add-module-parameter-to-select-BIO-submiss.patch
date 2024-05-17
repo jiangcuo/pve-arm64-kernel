@@ -1,0 +1,104 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Rob Norris <rob.norris@klarasystems.com>
+Date: Tue, 9 Jan 2024 13:28:57 +1100
+Subject: [PATCH] vdev_disk: add module parameter to select BIO submission
+ method
+
+This makes the submission method selectable at module load time via the
+`zfs_vdev_disk_classic` parameter, allowing this change to be backported
+to 2.2 safely, and disabled in favour of the "classic" submission method
+if new problems come up.
+
+Reviewed-by: Alexander Motin <mav@FreeBSD.org>
+Reviewed-by: Brian Behlendorf <behlendorf1@llnl.gov>
+Signed-off-by: Rob Norris <rob.norris@klarasystems.com>
+Sponsored-by: Klara, Inc.
+Sponsored-by: Wasabi Technology, Inc.
+Closes #15533
+Closes #15588
+(cherry picked from commit df2169d141aadc0c2cc728c5c5261d6f5c2a27f7)
+---
+ man/man4/zfs.4                  | 16 ++++++++++++++++
+ module/os/linux/zfs/vdev_disk.c | 31 +++++++++++++++++++++++++++++--
+ 2 files changed, 45 insertions(+), 2 deletions(-)
+
+diff --git a/man/man4/zfs.4 b/man/man4/zfs.4
+index b5679f2f0..6a628e7f3 100644
+--- a/man/man4/zfs.4
++++ b/man/man4/zfs.4
+@@ -1352,6 +1352,22 @@ If this is higher than the maximum allowed by the device queue or the kernel
+ itself, it will be clamped.
+ Setting it to zero will cause the kernel's ideal size to be used.
+ This parameter only applies on Linux.
++This parameter is ignored if
++.Sy zfs_vdev_disk_classic Ns = Ns Sy 1 .
++.
++.It Sy zfs_vdev_disk_classic Ns = Ns Sy 0 Ns | Ns 1 Pq uint
++If set to 1, OpenZFS will submit IO to Linux using the method it used in 2.2
++and earlier.
++This "classic" method has known issues with highly fragmented IO requests and
++is slower on many workloads, but it has been in use for many years and is known
++to be very stable.
++If you set this parameter, please also open a bug report why you did so,
++including the workload involved and any error messages.
++.Pp
++This parameter and the classic submission method will be removed once we have
++total confidence in the new method.
++.Pp
++This parameter only applies on Linux, and can only be set at module load time.
+ .
+ .It Sy zfs_expire_snapshot Ns = Ns Sy 300 Ns s Pq int
+ Time before expiring
+diff --git a/module/os/linux/zfs/vdev_disk.c b/module/os/linux/zfs/vdev_disk.c
+index 0ccb9ad96..a9110623a 100644
+--- a/module/os/linux/zfs/vdev_disk.c
++++ b/module/os/linux/zfs/vdev_disk.c
+@@ -1535,6 +1535,29 @@ vdev_disk_rele(vdev_t *vd)
+ 	/* XXX: Implement me as a vnode rele for the device */
+ }
+ 
++/*
++ * BIO submission method. See comment above about vdev_classic.
++ * Set zfs_vdev_disk_classic=0 for new, =1 for classic
++ */
++static uint_t zfs_vdev_disk_classic = 0;	/* default new */
++
++/* Set submission function from module parameter */
++static int
++vdev_disk_param_set_classic(const char *buf, zfs_kernel_param_t *kp)
++{
++	int err = param_set_uint(buf, kp);
++	if (err < 0)
++		return (SET_ERROR(err));
++
++	vdev_disk_io_rw_fn =
++	    zfs_vdev_disk_classic ? vdev_classic_physio : vdev_disk_io_rw;
++
++	printk(KERN_INFO "ZFS: forcing %s BIO submission\n",
++	    zfs_vdev_disk_classic ? "classic" : "new");
++
++	return (0);
++}
++
+ /*
+  * At first use vdev use, set the submission function from the default value if
+  * it hasn't been set already.
+@@ -1547,8 +1570,8 @@ vdev_disk_init(spa_t *spa, nvlist_t *nv, void **tsd)
+ 	(void) tsd;
+ 
+ 	if (vdev_disk_io_rw_fn == NULL)
+-		/* XXX make configurable */
+-		vdev_disk_io_rw_fn = 0 ? vdev_classic_physio : vdev_disk_io_rw;
++		vdev_disk_io_rw_fn = zfs_vdev_disk_classic ?
++		    vdev_classic_physio : vdev_disk_io_rw;
+ 
+ 	return (0);
+ }
+@@ -1650,3 +1673,7 @@ ZFS_MODULE_PARAM(zfs_vdev, zfs_vdev_, failfast_mask, UINT, ZMOD_RW,
+ 
+ ZFS_MODULE_PARAM(zfs_vdev_disk, zfs_vdev_disk_, max_segs, UINT, ZMOD_RW,
+ 	"Maximum number of data segments to add to an IO request (min 4)");
++
++ZFS_MODULE_PARAM_CALL(zfs_vdev_disk, zfs_vdev_disk_, classic,
++    vdev_disk_param_set_classic, param_get_uint, ZMOD_RD,
++	"Use classic BIO submission method");

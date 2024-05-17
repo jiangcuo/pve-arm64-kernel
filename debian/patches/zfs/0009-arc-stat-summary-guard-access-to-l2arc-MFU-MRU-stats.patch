@@ -27,7 +27,7 @@ Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
  2 files changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/cmd/arc_summary b/cmd/arc_summary
-index 426e02070..9de198150 100755
+index 9c69ec4f8..edf94ea2a 100755
 --- a/cmd/arc_summary
 +++ b/cmd/arc_summary
 @@ -655,13 +655,13 @@ def section_arc(kstats_dict):

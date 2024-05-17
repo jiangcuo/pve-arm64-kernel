@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Rob Norris <rob.norris@klarasystems.com>
+Date: Tue, 2 Apr 2024 15:14:54 +1100
+Subject: [PATCH] vdev_disk: don't touch vbio after its handed off to the
+ kernel
+
+After IO is unplugged, it may complete immediately and vbio_completion
+be called on interrupt context. That may interrupt or deschedule our
+task. If its the last bio, the vbio will be freed. Then, we get
+rescheduled, and try to write to freed memory through vbio->.
+
+This patch just removes the the cleanup, and the corresponding assert.
+These were leftovers from a previous iteration of vbio_submit() and were
+always "belt and suspenders" ops anyway, never strictly required.
+
+Reported-by: Rich Ercolani <rincebrain@gmail.com>
+Signed-off-by: Rob Norris <rob.norris@klarasystems.com>
+Sponsored-by: Klara, Inc.
+Sponsored-by: Wasabi Technology, Inc.
+(cherry picked from commit 34f662ad22206af6852020fd923ceccd836a855f)
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+---
+ module/os/linux/zfs/vdev_disk.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/module/os/linux/zfs/vdev_disk.c b/module/os/linux/zfs/vdev_disk.c
+index e1c19a085..62c7aa14f 100644
+--- a/module/os/linux/zfs/vdev_disk.c
++++ b/module/os/linux/zfs/vdev_disk.c
+@@ -758,8 +758,6 @@ vbio_fill_cb(struct page *page, size_t off, size_t len, void *priv)
+ static void
+ vbio_submit(vbio_t *vbio, abd_t *abd, uint64_t size)
+ {
+-	ASSERT(vbio->vbio_bdev);
+-
+ 	/*
+ 	 * We plug so we can submit the BIOs as we go and only unplug them when
+ 	 * they are fully created and submitted. This is important; if we don't
+@@ -777,12 +775,15 @@ vbio_submit(vbio_t *vbio, abd_t *abd, uint64_t size)
+ 	vbio->vbio_bio->bi_end_io = vbio_completion;
+ 	vbio->vbio_bio->bi_private = vbio;
+ 
++	/*
++	 * Once submitted, vbio_bio now owns vbio (through bi_private) and we
++	 * can't touch it again. The bio may complete and vbio_completion() be
++	 * called and free the vbio before this task is run again, so we must
++	 * consider it invalid from this point.
++	 */
+ 	vdev_submit_bio(vbio->vbio_bio);
+ 
+ 	blk_finish_plug(&plug);
+-
+-	vbio->vbio_bio = NULL;
+-	vbio->vbio_bdev = NULL;
+ }
+ 
+ /* IO completion callback */
