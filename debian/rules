@@ -33,9 +33,9 @@ override_dh_quilt_patch:
 		QUILT_SERIES=series.linux \
 		quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
 	cd ${ZFS_SRC}; \
-    	QUILT_PATCHES=../debian/patches  \
-    	QUILT_SERIES=series.zfs \
-    	quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
+	QUILT_PATCHES=../debian/patches  \
+	QUILT_SERIES=series.zfs \
+	quilt --quiltrc /dev/null --color=always push -a || test $$? = 2
 
 override_dh_quilt_unpatch:
 	cd ${KERNEL_SRC}; \
@@ -43,9 +43,9 @@ override_dh_quilt_unpatch:
 		QUILT_SERIES=series.linux \
 		quilt --quiltrc /dev/null pop -a || test $$? = 2
 	cd ${ZFS_SRC}; \
-    	QUILT_PATCHES=../debian/patches \
-    	QUILT_SERIES=series.zfs \
-    	quilt --quiltrc /dev/null pop -a || test $$? = 2
+	QUILT_PATCHES=../debian/patches \
+	QUILT_SERIES=series.zfs \
+	quilt --quiltrc /dev/null pop -a || test $$? = 2
 	rm -rf ${KERNEL_SRC}/.pc ${ZFS_SRC}/.pc
 
 override_dh_autoreconf:
@@ -84,11 +84,7 @@ override_dh_auto_clean: debian/control
 PVE_KERNEL_TEMPLATES := $(patsubst debian/templates/pve-kernel.%.in, debian/${PVE_KERNEL_PKG}.%, $(wildcard debian/templates/pve-kernel.*.in))
 
 ${KERNEL_SRC}/.config:
-	python3 ${KERNEL_SRC}/debian/scripts/misc/annotations -f ${KERNEL_SRC}/debian.master/config/annotations -a ${DEB_BUILD_ARCH} --export > ${KERNEL_SRC}/debian.master/config/config.ubuntu
-	${KERNEL_SRC}/scripts/kconfig/merge_config.sh -m \
-		-O ${KERNEL_SRC} \
-		${KERNEL_SRC}/debian.master/config/config.ubuntu \
-		debian/config/config.pve
+	cp debian/config/config.pve ${KERNEL_SRC}/.config
 	${MAKE} -C ${KERNEL_SRC} CC=${PVE_KERNEL_CC} olddefconfig
 
 debian/${PVE_KERNEL_PKG}.%: debian/templates/pve-kernel.%.in
