@@ -1,4 +1,4 @@
-pve-kernel (6.6-1) amd64; urgency=medium
+pve-kernel (6.6-1) openeuler; urgency=medium
 
   * for openeuler
 
