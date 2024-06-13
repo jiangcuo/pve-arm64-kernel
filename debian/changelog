@@ -1,3 +1,9 @@
+pve-kernel (6.6-20240608.1) openeuler; urgency=medium
+
+  * Add amdgpu virtio ast g200 drm driver support 
+
+ -- Jiangcuo <jiangcuo@bingsin.com>  Thu, 13 Jun 2024 17:47:10 +0800
+
 pve-kernel (6.6-20240608) openeuler; urgency=medium
 
   * Update to Linux 20240608
