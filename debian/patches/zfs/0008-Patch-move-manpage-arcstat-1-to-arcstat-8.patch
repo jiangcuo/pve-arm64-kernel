@@ -15,7 +15,7 @@ Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
  rename man/{man1/arcstat.1 => man8/arcstat.8} (99%)
 
 diff --git a/man/Makefile.am b/man/Makefile.am
-index 45156571e..3713e9371 100644
+index 43bb014dd..a9293468a 100644
 --- a/man/Makefile.am
 +++ b/man/Makefile.am
 @@ -2,7 +2,6 @@ dist_noinst_man_MANS = \

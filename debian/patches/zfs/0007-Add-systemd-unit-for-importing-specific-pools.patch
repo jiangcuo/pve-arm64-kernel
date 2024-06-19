@@ -18,7 +18,7 @@ Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
  etc/Makefile.am                           |  1 +
  etc/systemd/system/50-zfs.preset          |  1 +
- etc/systemd/system/zfs-import@.service.in | 18 ++++++++++++++++
+ etc/systemd/system/zfs-import@.service.in | 18 ++++++++++++++++++
  3 files changed, 20 insertions(+)
  create mode 100644 etc/systemd/system/zfs-import@.service.in
 
@@ -48,7 +48,7 @@ index e4056a92c..030611419 100644
  enable zfs-share.service
 diff --git a/etc/systemd/system/zfs-import@.service.in b/etc/systemd/system/zfs-import@.service.in
 new file mode 100644
-index 000000000..9b4ee9371
+index 000000000..5bd19fb79
 --- /dev/null
 +++ b/etc/systemd/system/zfs-import@.service.in
 @@ -0,0 +1,18 @@
