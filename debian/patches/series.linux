@@ -1,5 +1,6 @@
 pve/0001-Make-mkcompile_h-accept-an-alternate-timestamp-strin.patch
 pve/0002-kvm-disable-default-dynamic-halt-polling-growth.patch
+pve/0003-LoongArch-Add-LS7A-IOMMU-support.patch
 pve/0010-ethernet-bundle-module-for-Motorcomm-YT6801.patch
 pve/0010-PCI-use-local_pci_probe-when-best-selected-cpu-is-offline.patch
 pve/0011-net-stmmac-Move-the-atds-flag-to-the-stmmac_dma_cfg-.patch
