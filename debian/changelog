@@ -1,3 +1,9 @@
+pve-kernel (6.10-rc4) pve; urgency=medium
+
+  * Update Linux to 6.10-rc4
+
+ -- jiangcuo <jiangcuo@lierfang.com>  Sun, 23 Jun 2024 15:10:03 +0800
+
 pve-kernel (6.7-6) pve-1; urgency=medium
 
   * Add drivers
