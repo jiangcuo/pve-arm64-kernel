@@ -1,6 +1,6 @@
 [submodule "linux"]
 	path = linux
-	url = https://github.com/torvalds/linux
+	url = https://git.kernel.org/pub/scm/linux/kernel/git/chenhuacai/linux-loongson.git
 [submodule "zfs"]
 	path = zfs
 	url = https://github.com/openzfs/zfs

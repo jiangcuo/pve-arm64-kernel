@@ -1,3 +1,9 @@
+pve-kernel (6.10-20240628) pve; urgency=medium
+
+  * Update Linux to 6.10-rc5 20240628
+
+ -- root <root@loongbuilder.bingsin.com>  Fri, 28 Jun 2024 06:34:12 +0000
+
 pve-kernel (6.10-rc4) pve; urgency=medium
 
   * Update Linux to 6.10-rc4
