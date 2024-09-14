@@ -1,3 +1,9 @@
+pve-kernel (6.6-20240914) openeuler; urgency=medium
+
+  * Update Linux to 20240914
+
+ -- Jiangcuo <jiangcuo@bingsin.com>  Sat, 14 Sep 2024 14:24:35 +0800
+
 pve-kernel (6.6-20240730) openeuler; urgency=medium
 
   * Update Linux to 20240730
