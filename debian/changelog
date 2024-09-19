@@ -1,3 +1,34 @@
+pve-kernel (6.11-20240919) pve; urgency=medium
+
+  * Update Linux to 6.11-rc7 20240919 
+
+  * LoongArch: KVM: Add Binary Translation extension support
+  
+  * LoongArch: KVM: Add vm migration support for LBT registers
+  * LoongArch: KVM: Add PMU support for guest
+  * LoongArch: KVM: Add VM feature detection function
+  * LoongArch: Revert qspinlock to test-and-set simple lock on VM
+  * LoongArch: KVM: Enable paravirt feature control from VMM
+  * LoongArch: KVM: Implement function kvm_para_has_feature()
+  * irqchip/loongson-eiointc: Add virt extension support	
+  * LoongArch: KVM: Add irqfd supportloongarch-kvm
+  * LoongArch: KVM: Add PCHPIC user mode read and write functions	Xianglai Li
+  * LoongArch: KVM: Add PCHPIC read and write function
+  * LoongArch: KVM: Add PCHPIC device support
+  * LoongArch: KVM: Add EIOINTC user mode read and write functions
+  * LoongArch: KVM: Add EIOINTC read and write functions
+  * LoongArch: KVM: Add EIOINTC device support
+  * LoongArch: KVM: Add IPI user mode read and write function
+  * LoongArch: KVM: Add IPI read and write function
+  * LoongArch: KVM: Add IPI device support
+  * LoongArch: KVM: Add iocsr and mmio bus simulation in kernel
+
+  * Update ZFS 2.2.6
+
+  * Enable CONFIG_CRYPTO_CRC32_LOONGARCH && SM4
+
+ -- jiangcuo <jiangcuo@bingsin.com>  Thu, 19 Sep 2024 08:36:55 +0000
+
 pve-kernel (6.10-20240628) pve; urgency=medium
 
   * Update Linux to 6.10-rc5 20240628
