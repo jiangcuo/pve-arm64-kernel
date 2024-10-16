@@ -1,6 +1,3 @@
 [submodule "zfs"]
 	path = zfs
 	url = https://github.com/openzfs/zfs.git
-[submodule "linux"]
-	path = linux
-	url = https://gitee.com/openeuler/kernel.git
