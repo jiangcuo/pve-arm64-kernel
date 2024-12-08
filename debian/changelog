@@ -1,4 +1,4 @@
-pve-kernel (6.6-20241204) openeuler; urgency=medium
+pve-kernel (6.6.0-2) openeuler; urgency=medium
 
   * Update Linux to 20241204
 

@@ -1,6 +1,6 @@
 ## Kernel information
 KERNEL_MAJMIN=$(shell ./scripts/version.sh -n)
-KERNEL_VER=$(shell ./scripts/version.sh -L)
+KERNEL_VER=$(shell ./scripts/version.sh)
 
 ## Debian package information
 PKG_DISTRIBUTOR ?= PVE Port
