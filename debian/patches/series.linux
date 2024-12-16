@@ -9,6 +9,7 @@ pve/0009-allow-opt-in-to-allow-pass-through-on-broken-hardwar.patch
 pve/0010-KVM-nSVM-Advertise-support-for-flush-by-ASID.patch
 pve/0011-revert-memfd-improve-userspace-warnings-for-missing-.patch
 pve/0013-io_uring-rw-treat-EOPNOTSUPP-for-IOCB_NOWAIT-like-EA.patch
+pve/0018-add-Motorcomm-YT6801-driver.patch
 loongarch/001-LoongArch-KVM-Add-iocsr-and-mmio-bus-simulation-in-kernel.patch
 loongarch/002-LoongArch-KVM-Add-IPI-device-support.patch
 loongarch/003-LoongArch-KVM-Add-IPI-read-and-write-function.patch

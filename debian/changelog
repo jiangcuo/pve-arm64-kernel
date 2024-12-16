@@ -1,3 +1,9 @@
+pve-kernel (6.12.3-2) pve; urgency=medium
+
+  * Add some network driver include loongson dwmac yt6801
+
+ -- Jiangcuo <jiangcuo@lierfang.com>  Mon, 16 Dec 2024 14:58:44 +0800
+
 pve-kernel (6.12.3-1) pve; urgency=medium
 
   * Update Linux to 6.12.3
