@@ -1,3 +1,11 @@
+pve-kernel (6.1.119) generic; urgency=medium
+
+  * Update to Linux 6.1.119
+
+  * Update to ZFS 2.2.7
+
+ -- Jiangcuo <jiangcuo@lierfang.com>  Sun, 15 Dec 2024 11:49:36 +0800
+
 pve-kernel (6.1.102) generic; urgency=medium
 
   * Update to Linux 6.1.102
